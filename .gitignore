@@ -1,0 +1,9 @@
+/src/main/resources/application.properties
+target
+.classpath
+.project
+.settings
+.sql
+/src/main/resources/image
+/src/main/resources/image_map
+/src/main/resources/reservation-html-base
