@@ -5,6 +5,15 @@ import java.util.Objects;
 public class Category {
     private int id;
     private String name;
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public int getId() {
         return id;
@@ -27,6 +36,7 @@ public class Category {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", count=" + count +
                 '}';
     }
 
@@ -36,11 +46,12 @@ public class Category {
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
         return id == category.id &&
+                count == category.count &&
                 Objects.equals(name, category.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, count);
     }
 }
