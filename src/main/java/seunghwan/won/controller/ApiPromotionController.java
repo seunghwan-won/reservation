@@ -4,19 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import seunghwan.won.dto.Category;
-import seunghwan.won.service.CategoryService;
+import seunghwan.won.dto.Promotion;
+import seunghwan.won.service.PromotionService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/categories")
-public class ApiCategoryController {
+@RequestMapping(path = "api/promotions")
+public class ApiPromotionController {
     @Autowired
-    CategoryService categoryService;
-
+    PromotionService promotionService;
     @GetMapping
-    public List<Category> getCategoryList() {
-        return categoryService.getCategoryList();
+    public List<Promotion> getPromotionList() {
+        return promotionService.getPromotionList();
     }
 }

@@ -17,14 +17,16 @@ public class ProductDao {
     private SimpleJdbcInsert insert;
     private NamedParameterJdbcTemplate jdbcTemplate;
     private RowMapper<Product> rowMapper;
+    private final String TABLE_NAME = "product";
+    private final String ID = "id";
 
     public ProductDao(DataSource dataSource) {
-        this.insert = new SimpleJdbcInsert(dataSource).withTableName("product").usingGeneratedKeyColumns("id");
+        this.insert = new SimpleJdbcInsert(dataSource).withTableName(TABLE_NAME).usingGeneratedKeyColumns(ID);
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         this.rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
     }
 
-    public List<Product> getProductList() {
+    public List<Product> selectAll() {
         return jdbcTemplate.query(SELECT_ALL, rowMapper);
     }
 }

@@ -9,6 +9,6 @@ public class TestDBConnect {
     public void name() {
         ApplicationContext ac = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         CategoryDao dao = ac.getBean(CategoryDao.class);
-        System.out.println(dao.categoryList());
+        System.out.println(dao.selectAll());
     }
 }

@@ -5,5 +5,5 @@ import seunghwan.won.dto.Category;
 import java.util.List;
 
 public interface CategoryService {
-    public List<Category> selectAll();
+    public List<Category> getCategoryList();
 }

@@ -5,28 +5,29 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import seunghwan.won.dto.Category;
+import seunghwan.won.dto.Promotion;
 
 import javax.sql.DataSource;
 import java.util.List;
 
-import static seunghwan.won.dao.sqls.CategoryDaoSqls.SELECT_ALL;
+import static seunghwan.won.dao.sqls.PromotionDaoSqls.SELECT_ALL;
 
 @Repository
-public class CategoryDao {
-    private NamedParameterJdbcTemplate jdbc;
-    private RowMapper<Category> rowMapper;
+public class PromotionDao {
     private SimpleJdbcInsert insert;
-    private final String TABLE_NAME = "category";
+    private NamedParameterJdbcTemplate jdbcTemplate;
+    private RowMapper<Promotion> rowMapper;
+    private final String TABLE_NAME = "promotion";
     private final String ID = "id";
 
-    public CategoryDao(DataSource dataSource) {
-        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-        this.rowMapper = BeanPropertyRowMapper.newInstance(Category.class);
+    public PromotionDao(DataSource dataSource) {
+        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         this.insert = new SimpleJdbcInsert(dataSource).withTableName(TABLE_NAME).usingGeneratedKeyColumns(ID);
+        this.rowMapper = BeanPropertyRowMapper.newInstance(Promotion.class);
+
     }
 
-    public List<Category> selectAll() {
-        return jdbc.query(SELECT_ALL, rowMapper);
+    public List<Promotion> selectAll() {
+        return jdbcTemplate.query(SELECT_ALL, rowMapper);
     }
 }
