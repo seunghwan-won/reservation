@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import(DBConfig.class)
-@ComponentScan(basePackages = {"seunghwan.won.dao", "seunghwan.won.dto"})
+@ComponentScan(basePackages = {"seunghwan.won.dao", "seunghwan.won.service"})
 public class ApplicationConfig {
 }
