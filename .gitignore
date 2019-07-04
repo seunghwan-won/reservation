@@ -4,6 +4,9 @@ target
 .project
 .settings
 .sql
-/src/main/resources/image
-/src/main/resources/image_map
-/src/main/resources/reservation-html-base
+/src/main/resources/webapp/image
+/src/main/resources/webapp/image_map
+/src/main/resources/webapp/reservation-html-base
+.ds_store
+.idea
+.iml
