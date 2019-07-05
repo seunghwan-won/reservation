@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import seunghwan.won.dto.Category;
 import seunghwan.won.dto.CategoryJoinProduct;
 
 import javax.sql.DataSource;
@@ -18,19 +19,21 @@ import static seunghwan.won.dao.sqls.CategoryDaoSqls.SELECT_COUNT_BY_CATEGORY_ID
 @Repository
 public class CategoryDao {
     private NamedParameterJdbcTemplate jdbcTemplate;
-    private RowMapper<CategoryJoinProduct> rowMapper;
+    private RowMapper<Category> rowMapper;
+    private RowMapper<CategoryJoinProduct> categoryJoinProductRowMapper;
     private SimpleJdbcInsert insert;
     private final String TABLE_NAME = "category";
     private final String ID = "id";
 
     public CategoryDao(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.rowMapper = BeanPropertyRowMapper.newInstance(CategoryJoinProduct.class);
+        this.rowMapper = BeanPropertyRowMapper.newInstance(Category.class);
+        this.categoryJoinProductRowMapper = BeanPropertyRowMapper.newInstance(CategoryJoinProduct.class);
         this.insert = new SimpleJdbcInsert(dataSource).withTableName(TABLE_NAME).usingGeneratedKeyColumns(ID);
     }
 
     public List<CategoryJoinProduct> selectAll() {
-        return jdbcTemplate.query(SELECT_ALL, rowMapper);
+        return jdbcTemplate.query(SELECT_ALL, categoryJoinProductRowMapper);
     }
 
     public int countByCategoryId(int categoryId) {
