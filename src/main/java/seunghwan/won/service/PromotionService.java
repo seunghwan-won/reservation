@@ -5,5 +5,5 @@ import seunghwan.won.dto.Promotion;
 import java.util.List;
 
 public interface PromotionService {
-    public List<Promotion> getPromotionList();
+    List<Promotion> getPromotionList();
 }

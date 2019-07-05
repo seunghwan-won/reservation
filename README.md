@@ -40,7 +40,7 @@ webapp폴더에 img와 img_map 폴더 아래에 샘플 이미지가 위치합니
 GET (카테고리 목록 구하기): /api/categories
 상품 목록 구하기 API 스펙 & test
 
-GET (상품 목록 구하기): /api/products
+GET (상품 목록 구하기): /api/productJoinDisplayInfoJoinFileInfos
 프로모션 정보 구하기 API 스펙 & test
 
 GET (프로모션 목록 구하기): /api/promotions

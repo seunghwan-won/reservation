@@ -2,9 +2,10 @@ package seunghwan.won.dto;
 
 import java.util.Objects;
 
-public class Category {
+public class CategoryJoinProduct {
     private int id;
     private String name;
+    private int count;
 
     public int getId() {
         return id;
@@ -22,11 +23,20 @@ public class Category {
         this.name = name;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     @Override
     public String toString() {
-        return "Category{" +
+        return "CategoryJoinProduct{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", count=" + count +
                 '}';
     }
 
@@ -34,13 +44,14 @@ public class Category {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return id == category.id &&
-                Objects.equals(name, category.name);
+        CategoryJoinProduct categoryJoinProduct = (CategoryJoinProduct) o;
+        return id == categoryJoinProduct.id &&
+                count == categoryJoinProduct.count &&
+                Objects.equals(name, categoryJoinProduct.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, count);
     }
 }
