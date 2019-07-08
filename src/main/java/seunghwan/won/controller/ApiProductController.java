@@ -1,10 +1,7 @@
 package seunghwan.won.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import seunghwan.won.dto.ProductJoinDisplayInfoJoinFileInfo;
 import seunghwan.won.service.ProductService;
 
@@ -18,6 +15,7 @@ public class ApiProductController {
     @Autowired
     ProductService productService;
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping
     public Map<String, Object> getProductList(@RequestParam(name = "categoryId", required = false, defaultValue = "0") Integer categoryId,
                                               @RequestParam(name = "start", required = false, defaultValue = "0") Integer start) {

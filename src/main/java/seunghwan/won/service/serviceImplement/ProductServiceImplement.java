@@ -6,7 +6,6 @@ import seunghwan.won.dao.ProductDao;
 import seunghwan.won.dto.ProductJoinDisplayInfoJoinFileInfo;
 import seunghwan.won.service.ProductService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,13 +16,13 @@ public class ProductServiceImplement implements ProductService {
 
     @Override
     public int getProductCount(Integer categoryId) {
-        return categoryId == 0 ? 0 : productDao.getTotalCount(categoryId);
+        return categoryId == 0 ?  productDao.getTotalCount() : productDao.getTotalCount(categoryId);
     }
 
     @Override
     public List<ProductJoinDisplayInfoJoinFileInfo> getProductList(Integer categoryId, Integer start) {
-        return categoryId == 0 ? new ArrayList<>() :
-                productDao.selectAll(categoryId, start, ProductService.LIMIT);
+        return categoryId == 0 ? productDao.selectAll(start,ProductService.LIMIT):
+                productDao.selectByCategoryId(categoryId, start, ProductService.LIMIT);
     }
 
 }

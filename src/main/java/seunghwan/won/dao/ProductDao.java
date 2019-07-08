@@ -14,8 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static seunghwan.won.dao.sqls.ProductDaoSqls.SELECT_COUNT;
-import static seunghwan.won.dao.sqls.ProductDaoSqls.SELECT_PASING_BY_CATEGORY_ID;
+import static seunghwan.won.dao.sqls.ProductDaoSqls.*;
 
 @Repository
 public class ProductDao {
@@ -34,7 +33,7 @@ public class ProductDao {
                 .newInstance(ProductJoinDisplayInfoJoinFileInfo.class);
     }
 
-    public List<ProductJoinDisplayInfoJoinFileInfo> selectAll(Integer categoryId, Integer start, Integer limit) {
+    public List<ProductJoinDisplayInfoJoinFileInfo> selectByCategoryId(Integer categoryId, Integer start, Integer limit) {
         Map<String, Object> param = new HashMap<>();
         param.put("categoryId", categoryId);
         param.put("type", "th");
@@ -46,8 +45,17 @@ public class ProductDao {
 
     public int getTotalCount(Integer categoryId) {
         Map<String, Integer> param = Collections.singletonMap("categoryId", categoryId);
-        return jdbcTemplate.queryForObject(SELECT_COUNT, param, Integer.class);
+        return jdbcTemplate.queryForObject(SELECT_COUNT_BY_CATEGOTY_ID, param, Integer.class);
     }
 
+    public List<ProductJoinDisplayInfoJoinFileInfo> selectAll(Integer start, Integer limit) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("start", start);
+        param.put("limit", limit);
+        return jdbcTemplate.query(SELECT_ALL, param, productJoinDisplayInfoJoinFileInfoRowMapper);
+    }
 
+    public int getTotalCount() {
+        return jdbcTemplate.queryForObject(SELECT_COUNT_ALL, new HashMap<>(), Integer.class);
+    }
 }

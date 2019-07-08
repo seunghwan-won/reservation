@@ -2,7 +2,9 @@ package seunghwan.won.dao;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import seunghwan.won.dto.Category;
@@ -30,6 +32,11 @@ public class CategoryDao {
         this.rowMapper = BeanPropertyRowMapper.newInstance(Category.class);
         this.categoryJoinProductRowMapper = BeanPropertyRowMapper.newInstance(CategoryJoinProduct.class);
         this.insert = new SimpleJdbcInsert(dataSource).withTableName(TABLE_NAME).usingGeneratedKeyColumns(ID);
+    }
+
+    public int insert(Category category) {
+        SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(category);
+        return insert.executeAndReturnKey(sqlParameterSource).intValue();
     }
 
     public List<CategoryJoinProduct> selectAll() {
