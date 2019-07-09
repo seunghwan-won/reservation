@@ -9,7 +9,8 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
-import static seunghwan.won.dao.sqls.ProductImageDaoSqls.SELECT_URL;
+import static seunghwan.won.dao.sqls.ProductImageDaoSqls.SELECT_PRODUCT_IMAGE_URL_BY_PRODUCT_ID;
+import static seunghwan.won.dao.sqls.ProductImageDaoSqls.SELECT_PROMOTION_IMAGE_URL_BY_PRODUT_ID_AND_PROMOTION_ID;
 
 @Repository
 public class ProductImageDao {
@@ -22,10 +23,18 @@ public class ProductImageDao {
     }
 
 
-    public String getUrl(int productId, int productImageId) {
-        Map<String, Integer> param = new HashMap<>();
+    public String getProductImageUrl(int productId, String type) {
+        Map<String, Object> param = new HashMap<>();
         param.put("productId", productId);
-        param.put("productImageId", productImageId);
-        return jdbcTemplate.queryForObject(SELECT_URL, param, String.class);
+        param.put("type", type);
+        return jdbcTemplate.queryForObject(SELECT_PRODUCT_IMAGE_URL_BY_PRODUCT_ID, param, String.class);
+    }
+
+    public String getPromotionImageUrl(int productId, int promotionId, String type) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("productId", productId);
+        param.put("promotionId", promotionId);
+        param.put("type", type);
+        return jdbcTemplate.queryForObject(SELECT_PROMOTION_IMAGE_URL_BY_PRODUT_ID_AND_PROMOTION_ID, param, String.class);
     }
 }

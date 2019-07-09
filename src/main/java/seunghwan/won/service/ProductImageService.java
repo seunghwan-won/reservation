@@ -1,7 +1,9 @@
 package seunghwan.won.service;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 public interface ProductImageService {
-    String getImageUrl(int productId, int productImageId);
+    byte[] getPromotionImageUrl(int productId, int productImageId, String type, HttpServletRequest request);
+
+    byte[] getProductImageUrl(int id, String type, HttpServletRequest request);
 }
