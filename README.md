@@ -1,55 +1,34 @@
-# reservation
-~~1. maven 프로젝트를 생성합니다.
-groupId 와 artifactId 는 임의로 지정합니다.~~
+- FE
+~~- 전체리스트가 Ajax를 통해서 화면에 4개의 아이템이 노출된다. ~~
+~~- 탭별로 전체갯수가 상단에 노출되야 한다.
+- 각 아이템(전시상품)은 이미지/제목/장소/설명이 노출되야 한다.~~
+~~- 탭을 누르면 다른 카테고리 콘텐츠 4개가 다시 노출된다. ~~
+~~- 더보기를 누르면 4개씩 노출되야 한다. 4개보다 적으면 적은 만큼 노출되야 한다. ~~
+~~- 더보여줄 데이터가 없다면 더보기는 사라진다. ~~
+~~- TOP영역이 선택되면, 화면 맨 위로 이동한다~~
 
- 
-~~2. MySQL 에서 프로젝트에 사용할 database 와 사용자 계정을 생성합니다.
-생성한 데이터베이스와 계정정보는 src/main/resources/application.properties 파일에 다음과 같이 설정합니다.
-spring.datasource.driver-class-name=com.mysql.jdbc.Driver 
-spring.datasource.url=jdbc:mysql://domain:port/dbName?useUnicode=true&characterEncoding=utf8 
-spring.datasource.username=dbUserName
-spring.datasource.password=dbPasswd~~
- 
-
-~~3. 프로젝트 루트 폴더에 .gitignore파일을 생성합니다. (gitignore 참고자료)
-해당 파일에는 다음의 내용을 입력합니다.
-/src/main/resources/application.properties
-target
-.classpath
-.project
-.settings~~
- 
-
-~~4. 생성한 데이터베이스에 접속하여 주어진 sql을 실행합니다.
-먼저 ddl.sql의 내용을 실행하여 테이블을 생성하고, dml.sql의 내용을 실행하여 샘플 데이터를 추가합니다. 코드 바로가기~~
-
-~~5. sample이미지가 있는 압축파일인 img.zip을 webapp 폴더에 압축 해제합니다.
-webapp폴더에 img와 img_map 폴더 아래에 샘플 이미지가 위치합니다.~~
-
- 
-
-6. Spring MVC, Spring JDBC를 사용하기 위한 Spring설정 파일들을 작성합니다.
-
-7. 샘플 데이터를 읽어 들여 메인화면을 출력하기 위한 DTO, Controller, Service, Repository를 알맞게 작성합니다.
-
-
-8. web API 스펙은 아래와 같습니다.
-
-카테고리 목록 구하기 API 스펙 & test
-
-GET (카테고리 목록 구하기): /api/categories
-상품 목록 구하기 API 스펙 & test
-
-GET (상품 목록 구하기): /api/productJoinDisplayInfoJoinFileInfos
-프로모션 정보 구하기 API 스펙 & test
-
-GET (프로모션 목록 구하기): /api/promotions
- 
-
- 
-
-9. image type 설명
-
-th: thumbnail (썸네일 사진 - 상품리스트 혹은 프로모션 정보에서 보여주는 이미지)
-ma: main (메인 사진 - 상품 상세정보에서 보여주는 이미지)
-et: etc (기타 사진 - 상품 상세정보에서 추가적으로 보여주는 기타 이미지)
+- BE
+~~- JAVA Naming Conventions 을 지킨다.(참고 1) (참고 2) ~~
+~~- 클래스의 이름과 메소드의 이름은 직관적으로 작성하도록 한다. 클래스의 이름과 메소드의 이름만 보아도,어떤 기능을 가지고 있을지 어떤 내용이 구현되어 있을지 짐작할 수 있어야 한다.~~
+~~- 코드를 읽는 사람이 개념을 쉽게 파악할 수 있도록 읽기 쉬운 코드를 작성하도록 한다. 예를 들어 변수 이름을 구체적으로 작성하도록 한다.~~
+~~- 중복된 코드가 있다면, 별도의 메소드나 클래스로 분리하도록 한다.~~
+~~- 하나의 메소드가 너무 많은 코드를 담지 않는다. 코드의 양이 많을 경우 private한 메소드를 이용해서 메소드를 분리하거나 별도의 객체를 만들어 사용하도록 한다.~~
+~~- 클래스의 코드 길이가 너무 길어진다면, 해당 클래스가 몇개의 클래스로 분리될 수 있는지 고민한다.~~
+~~- 변수는 최대한 덜 사용하고, 최대한 가볍게 만들어 가독성을 높이도록 한다.~~
+~~- 조건문의 경우 긍정적이고 흥미로운 (주 흐름에 해당하는) 경우가 앞쪽에 위치하도록 한다.~~
+~~- 삼항연산자, do-while문장은 코드 가독성을 떨어트리니 되도록 사용하지 않는다.~~
+~~- 블럭이 너무 많이 중첩되면 코드를 읽기 어려워진다. 블록을 private메소드로 추출할 수 있는지 고민한다.~~
+~~-코드는 빈줄을 이용해 커다란 블록을 논리적인 문단으로 구분한다.~~
+~~- 코드는 들여쓰기를 잘 지키도록 한다.~~
+~~- 필요하지 않은 코드는 제거한다.~~
+~~- pom.xml 파일에 알맞은 의존성을 설정할 수 있어야 한다.~~
+~~- .gitignore파일이 주어진 요구사항대로 알맞게 작성되어 있어야 한다.~~
+~~- Controller, Service, Repository를 사용하여 구현되어 있어야 한다.~~
+~~- Controller에서 Service를 Service에서 Repository의 기능을 호출할 수 있지만, 그 반대는 허용되지 않는다.~~
+~~- 전체, 카테고리별 상품정보를 제공하는 Web Api를 제공한다. 해당 Web API는 카테고리 id를 파라미터로 받을 수 있다. 카테고리 id를 받지 않을 경우엔 전체 상품정보를 제공한다.~~
+~~해당 Web API는 순번을 파라미터로 받을 수 있다. 파라미터로 순번을 못 받을 경우 첫번째 데이터부터 4번째 데이터까지 제공한다. 순번을 받으면 순번 이후의 상품정보를 최대 4건을 제공한다.~~
+~~- 전체, 카테고리별 상품 수를 제공하는 Web Api를 제공한다.~~
+~~- 프로모션 정보를 알맞게 제공하는 Web Api를 제공한다.~~
+~~- SQL 문을 표준에 맞추어 작성하며 각 DBMS 별로 구현된 문법 사용은 최소화한다.~~
+- 전체, 카테고리별 상품 수는 GROUP BY 구문을 이용한다.
+~~- 데이터 수를 조회하는 경우 COUNT(*) 를 사용한다.~~
