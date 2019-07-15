@@ -134,7 +134,7 @@
 
 <script type="rv-template" id="itemList">
     <li class="item">
-        <a href="detail.html?id={{productId}}" class="item_book">
+        <a href="detail?id={{productId}}" class="item_book">
             <div class="item_preview">
                 <img alt="{{productDescription}}" class="img_thumb" src="http://127.0.0.1:8080/api/productImages/{{productId}}?type=th">
                 <span class="img_border"></span>
