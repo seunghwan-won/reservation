@@ -1,6 +1,5 @@
 package seunghwan.won.dao;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -12,28 +11,40 @@ import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.List;
 
-import static seunghwan.won.dao.sqls.PromotionDaoSqls.SELECT_ALL;
+import static seunghwan.won.dao.sqls.PromotionDaoSqls.*;
 
 @Repository
 public class PromotionDao {
     private SimpleJdbcInsert insert;
     private NamedParameterJdbcTemplate jdbcTemplate;
-    private RowMapper<Promotion> rowMapper;
-    private RowMapper<PromotionJoinProductJoinProductImageJoinFileInfo> promotionJoinProductJoinProductImageJoinFileInfoRowMapper;
+    private RowMapper<?> rowMapper;
+    private RowMapper<?> promotionJoinProductJoinProductImageJoinFileInfoRowMapper;
     private final String TABLE_NAME = "promotion";
-    private final String ID = "id";
 
     public PromotionDao(DataSource dataSource) {
-        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.insert = new SimpleJdbcInsert(dataSource).withTableName(TABLE_NAME).usingGeneratedKeyColumns(ID);
-        this.rowMapper = BeanPropertyRowMapper.newInstance(Promotion.class);
-        this.promotionJoinProductJoinProductImageJoinFileInfoRowMapper = BeanPropertyRowMapper
-                .newInstance(PromotionJoinProductJoinProductImageJoinFileInfo.class);
+        this.jdbcTemplate = DaoUtil.getJdbcTemplate(dataSource);
+        this.rowMapper = DaoUtil.getRowMapper(Promotion.class);
+        this.promotionJoinProductJoinProductImageJoinFileInfoRowMapper =
+                DaoUtil.getRowMapper(PromotionJoinProductJoinProductImageJoinFileInfo.class);
+        this.insert = DaoUtil.getInsert(dataSource, TABLE_NAME);
 
     }
 
+    public int insertPromotion(Promotion promotion) {
+        return DaoUtil.insert(promotion, insert);
+    }
+
+    public Promotion selectPromotionById(int id) {
+        return (Promotion) DaoUtil.select(jdbcTemplate, SELECT_BY_ID, id, rowMapper);
+    }
+
+    public int deletePromotionById(int id) {
+        return DaoUtil.delete(jdbcTemplate, DELETE_BY_ID, id);
+    }
+
+
     public List<PromotionJoinProductJoinProductImageJoinFileInfo> selectAll() {
-        return jdbcTemplate.query(SELECT_ALL, Collections.singletonMap("type", "th"),
-                promotionJoinProductJoinProductImageJoinFileInfoRowMapper);
+        return (List<PromotionJoinProductJoinProductImageJoinFileInfo>) jdbcTemplate.query(SELECT_ALL,
+                Collections.singletonMap("type", "th"), promotionJoinProductJoinProductImageJoinFileInfoRowMapper);
     }
 }

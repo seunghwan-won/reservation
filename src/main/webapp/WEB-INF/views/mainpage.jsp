@@ -117,9 +117,10 @@
 </footer>
 
 
+
 <script type="rv-template" id="promotionItem">
     <li class="item"
-        style="background-image: url(http://127.0.0.1:8080/api/productImages/{productId}/{productImageId});">
+        style="background-image: url(http://127.0.0.1:8080/api/productImages/{{productId}}/{{promotionId}});">
         <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span
                 class="img_bg_gra"></span>
             <div class="event_txt">
@@ -133,23 +134,23 @@
 
 <script type="rv-template" id="itemList">
     <li class="item">
-        <a href="detail.html?id={id}" class="item_book">
+        <a href="detail.html?id={{productId}}" class="item_book">
             <div class="item_preview">
-                <img alt="{description}" class="img_thumb" src="http://127.0.0.1:8080/api/productImages/{id}?type=th">
+                <img alt="{{productDescription}}" class="img_thumb" src="http://127.0.0.1:8080/api/productImages/{{productId}}?type=th">
                 <span class="img_border"></span>
             </div>
             <div class="event_txt">
-                <h4 class="event_txt_tit"><span>{description}</span>
-                    <small class="sm">{placeName}</small>
+                <h4 class="event_txt_tit"><span>{{productDescription}}</span>
+                    <small class="sm">{{placeName}}</small>
                 </h4>
-                <p class="event_txt_dsc">{content}</p>
+                <p class="event_txt_dsc">{{productContent}}</p>
             </div>
         </a>
     </li>
 </script>
 
 <script src="/resource/js/mainpage.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
 </body>
 
 </html>

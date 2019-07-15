@@ -1,6 +1,5 @@
 package seunghwan.won.dao;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -20,18 +19,33 @@ import static seunghwan.won.dao.sqls.ProductDaoSqls.*;
 public class ProductDao {
     private SimpleJdbcInsert insert;
     private NamedParameterJdbcTemplate jdbcTemplate;
-    private RowMapper<Product> rowMapper;
-    private RowMapper<ProductJoinDisplayInfoJoinFileInfo> productJoinDisplayInfoJoinFileInfoRowMapper;
+    private RowMapper<?> rowMapper;
+    private RowMapper<?> productJoinDisplayInfoJoinFileInfoRowMapper;
     private final String TABLE_NAME = "product";
-    private final String ID = "id";
 
     public ProductDao(DataSource dataSource) {
-        this.insert = new SimpleJdbcInsert(dataSource).withTableName(TABLE_NAME).usingGeneratedKeyColumns(ID);
-        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
-        this.productJoinDisplayInfoJoinFileInfoRowMapper = BeanPropertyRowMapper
-                .newInstance(ProductJoinDisplayInfoJoinFileInfo.class);
+        this.jdbcTemplate = DaoUtil.getJdbcTemplate(dataSource);
+        this.rowMapper = DaoUtil.getRowMapper(Product.class);
+        this.productJoinDisplayInfoJoinFileInfoRowMapper = DaoUtil.getRowMapper(ProductJoinDisplayInfoJoinFileInfo.class);
+        this.insert = DaoUtil.getInsert(dataSource, TABLE_NAME);
     }
+
+    public int insertProduct(Product product) {
+        return DaoUtil.insert(product, insert);
+    }
+
+    public Product selectProductById(int id) {
+        return (Product) DaoUtil.select(jdbcTemplate, SELECT_BY_ID, id, rowMapper);
+    }
+
+    public int updateProduct(Product product) {
+        return DaoUtil.update(jdbcTemplate, UPDATE_BY_ID, product);
+    }
+
+    public int deleteProductById(int id) {
+        return DaoUtil.delete(jdbcTemplate, DELETE_BY_ID, id);
+    }
+
 
     public List<ProductJoinDisplayInfoJoinFileInfo> selectByCategoryId(Integer categoryId, Integer start, Integer limit) {
         Map<String, Object> param = new HashMap<>();
@@ -39,7 +53,8 @@ public class ProductDao {
         param.put("type", "th");
         param.put("start", start);
         param.put("limit", limit);
-        return jdbcTemplate.query(SELECT_PASING_BY_CATEGORY_ID, param, productJoinDisplayInfoJoinFileInfoRowMapper);
+        return (List<ProductJoinDisplayInfoJoinFileInfo>)jdbcTemplate.query(SELECT_PASING_BY_CATEGORY_ID, param,
+                productJoinDisplayInfoJoinFileInfoRowMapper);
     }
 
 
@@ -52,7 +67,8 @@ public class ProductDao {
         Map<String, Object> param = new HashMap<>();
         param.put("start", start);
         param.put("limit", limit);
-        return jdbcTemplate.query(SELECT_ALL, param, productJoinDisplayInfoJoinFileInfoRowMapper);
+        return (List<ProductJoinDisplayInfoJoinFileInfo>)jdbcTemplate.query(SELECT_ALL, param,
+                productJoinDisplayInfoJoinFileInfoRowMapper);
     }
 
     public int getTotalCount() {

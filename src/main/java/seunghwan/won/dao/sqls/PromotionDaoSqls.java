@@ -1,6 +1,8 @@
 package seunghwan.won.dao.sqls;
 
 public class PromotionDaoSqls {
+    public static final String SELECT_BY_ID = "select id, product_id from promotion where id=:id";
+
     public static final String SELECT_ALL = "Select promotion.id as promotionId, product.id as productId, " +
             "file_info.save_file_name as productImageUrl\n" +
             "From file_info\n" +
@@ -11,4 +13,6 @@ public class PromotionDaoSqls {
             "Inner join promotion\n" +
             "On promotion.product_id = product.id\n" +
             "Where product_image.type=:type;";
+
+    public static final String DELETE_BY_ID = "delete from promotion where id=:id";
 }

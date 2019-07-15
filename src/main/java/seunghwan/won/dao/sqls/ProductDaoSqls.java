@@ -1,6 +1,8 @@
 package seunghwan.won.dao.sqls;
 
 public class ProductDaoSqls {
+    public static final String SELECT_BY_ID = "select id, category_id, description, content, event, create_date," +
+            "modify_date from product where id=:id";
     public static final String SELECT_COUNT_BY_CATEGOTY_ID = "select count(*) from display_info inner join product " +
             "on display_info.product_id = product.id inner join category on category.id = product.category_id" +
             " where category.id = :categoryId";
@@ -22,4 +24,9 @@ public class ProductDaoSqls {
             "INNER JOIN product_image ON product.id = product_image.product_id " +
             "INNER JOIN file_info ON product_image.file_id = file_info.id " +
             "WHERE product.category_id = :categoryId AND product_image.type =:type limit :start, :limit";
+
+    public static final String UPDATE_BY_ID = "update product set description=:description, content=:content, event=:event," +
+            "modify_date=:modifyDate  where id=:id";
+
+    public static final String DELETE_BY_ID = "delete from product where id=:id";
 }
