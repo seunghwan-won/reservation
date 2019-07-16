@@ -2,6 +2,7 @@ package seunghwan.won.service.serviceImplement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import seunghwan.won.dao.PromotionDao;
 import seunghwan.won.dto.PromotionJoinProductJoinProductImageJoinFileInfo;
 import seunghwan.won.service.PromotionService;
@@ -16,6 +17,7 @@ public class PromotionServiceImplement implements PromotionService {
     PromotionDao promotionDao;
 
     @Override
+    @Transactional
     public Map<String, List> getPromotionList() {
         Map<String, List> result = new HashMap<>();
         List<PromotionJoinProductJoinProductImageJoinFileInfo> promotionJoinProductJoinProductImageJoinFileInfoList

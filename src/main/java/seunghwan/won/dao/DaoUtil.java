@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
@@ -39,6 +38,6 @@ public class DaoUtil {
     }
 
     public static int delete(NamedParameterJdbcTemplate jdbcTemplate, String sql, int id) {
-        return jdbcTemplate.update(sql, Collections.singletonMap(ID,id));
+        return jdbcTemplate.update(sql, Collections.singletonMap(ID, id));
     }
 }

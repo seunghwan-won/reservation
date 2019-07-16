@@ -3,6 +3,7 @@ package seunghwan.won.service.serviceImplement;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import seunghwan.won.dao.ProductImageDao;
 import seunghwan.won.service.ProductImageService;
 
@@ -17,12 +18,14 @@ public class ProductImageServiceImplement implements ProductImageService {
     private ProductImageDao productImageDao;
 
     @Override
+    @Transactional
     public byte[] getPromotionImageUrl(int productId, int productImageId, String type, HttpServletRequest request) {
         String url = productImageDao.getPromotionImageUrl(productId, productImageId, type);
         return getBytes(request, url);
     }
 
     @Override
+    @Transactional
     public byte[] getProductImageUrl(int productId, String type, HttpServletRequest request) {
         String url = productImageDao.getProductImageUrl(productId, type);
         return getBytes(request, url);

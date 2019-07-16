@@ -3,6 +3,7 @@ package seunghwan.won.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import seunghwan.won.dto.ProductJoinDisplayInfoJoinFileInfo;
+import seunghwan.won.service.DetailService;
 import seunghwan.won.service.ProductService;
 
 import java.util.HashMap;
@@ -15,6 +16,9 @@ public class ApiProductController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    DetailService detailService;
+
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping
     public Map<String, Object> getProductList(@RequestParam(name = "categoryId", required = false, defaultValue = "0") Integer categoryId,
@@ -25,5 +29,11 @@ public class ApiProductController {
         result.put("totalCount", totalCount);
         result.put("items", productJoinDisplayInfoJoinFileInfoList);
         return result;
+    }
+
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+    @GetMapping(path = "{displayInfoId}")
+    public Map<String, Object> detailPage(@RequestParam(name = "displayInfoId", required = true) int displayInfoId) {
+        return detailService.getDetail(displayInfoId);
     }
 }

@@ -2,7 +2,7 @@ package seunghwan.won.dto;
 
 import java.util.Objects;
 
-public class ReservationUserCommnetImage {
+public class ReservationUserCommentImage {
     private int id;
     private int reservationInfoId;
     private int reservationInfoCommentId;
@@ -42,7 +42,7 @@ public class ReservationUserCommnetImage {
 
     @Override
     public String toString() {
-        return "ReservationUserCommnetImage{" +
+        return "ReservationUserCommentImage{" +
                 "id=" + id +
                 ", reservationInfoId=" + reservationInfoId +
                 ", reservationInfoCommentId=" + reservationInfoCommentId +
@@ -54,7 +54,7 @@ public class ReservationUserCommnetImage {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ReservationUserCommnetImage that = (ReservationUserCommnetImage) o;
+        ReservationUserCommentImage that = (ReservationUserCommentImage) o;
         return id == that.id &&
                 reservationInfoId == that.reservationInfoId &&
                 reservationInfoCommentId == that.reservationInfoCommentId &&
