@@ -33,7 +33,7 @@ public class ApiProductController {
 
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping(path = "{displayInfoId}")
-    public Map<String, Object> detailPage(@RequestParam(name = "displayInfoId", required = true) int displayInfoId) {
+    public Map<String, Object> detailPage(@PathVariable(name = "displayInfoId") int displayInfoId) {
         return detailService.getDetail(displayInfoId);
     }
 }

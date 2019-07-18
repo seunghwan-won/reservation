@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
 import java.util.Collections;
+import java.util.List;
 
 public class DaoUtil {
     public final static String ID = "id";

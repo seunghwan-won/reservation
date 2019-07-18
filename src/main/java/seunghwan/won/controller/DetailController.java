@@ -15,7 +15,6 @@ public class DetailController {
 
     @GetMapping()
     public String detailPage(@RequestParam(name = "id", required = true) int productId) {
-        System.out.println("productID: " + productId);
         return "detail";
     }
 }

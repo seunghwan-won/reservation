@@ -15,7 +15,6 @@ import static seunghwan.won.dao.sqls.ProductImageDaoSqls.*;
 @Repository
 public class ProductImageDao {
     private NamedParameterJdbcTemplate jdbcTemplate;
-    private RowMapper<?> stringRowMapper;
     private RowMapper<?> rowMapper;
     private SimpleJdbcInsert insert;
     private final String TABLE_NAME = "product_image";
@@ -23,7 +22,6 @@ public class ProductImageDao {
 
     public ProductImageDao(DataSource dataSource) {
         this.jdbcTemplate = DaoUtil.getJdbcTemplate(dataSource);
-        this.stringRowMapper = DaoUtil.getRowMapper(String.class);
         this.rowMapper = DaoUtil.getRowMapper(ProductImage.class);
         this.insert = DaoUtil.getInsert(dataSource, TABLE_NAME);
     }
