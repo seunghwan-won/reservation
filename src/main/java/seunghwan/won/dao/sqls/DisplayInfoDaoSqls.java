@@ -56,7 +56,7 @@ public class DisplayInfoDaoSqls {
             "WHERE di.id = :id\n" +
             "ORDER BY c.id\n" +
             "    DESC";
-    public static final String CALC_AVERAGE = "select round(avg(ruc.score ),9) from display_info di\n" +
+    public static final String CALC_AVERAGE = "select round(avg(ruc.score ),1) from display_info di\n" +
             "inner join  product p on di.product_id = p.id\n" +
             "inner join  reservation_user_comment ruc on p.id = ruc.product_id\n" +
             "where di.id = :id";
@@ -70,7 +70,23 @@ public class DisplayInfoDaoSqls {
             "FROM display_info d\n" +
             "         INNER JOIN product p on d.product_id = p.id\n" +
             "         INNER JOIN product_price pp on p.id = pp.product_id\n" +
-            "WHERE d.id = 1\n" +
+            "WHERE d.id = :id\n" +
             "ORDER BY pp.id\n" +
             "    DESC";
+    public static final String SELECT_COMMENT_IMAGE = "SELECT ruci.id                 as imageId,\n" +
+            "       ruci.reservation_info_id as reservationInfoId,\n" +
+            "       ruc.id                  as reservationUserCommentId,\n" +
+            "       f.id                    as fileId,\n" +
+            "       f.file_name             as fileName,\n" +
+            "       f.save_file_name        as saveFileName,\n" +
+            "       f.content_type          as contentType,\n" +
+            "       f.delete_flag           as deleteFlag,\n" +
+            "       f.create_date           as createDate,\n" +
+            "       f.modify_date           as modifyDate\n" +
+            "FROM display_info d\n" +
+            "         INNER JOIN product p on d.product_id = p.id\n" +
+            "         INNER JOIN reservation_user_comment ruc on p.id = ruc.product_id\n" +
+            "         INNER JOIN reservation_user_comment_image ruci on ruc.id = ruci.reservation_user_comment_id\n" +
+            "         INNER JOIN file_info f on ruci.file_id = f.id\n" +
+            "WHERE d.id = :id";
 }

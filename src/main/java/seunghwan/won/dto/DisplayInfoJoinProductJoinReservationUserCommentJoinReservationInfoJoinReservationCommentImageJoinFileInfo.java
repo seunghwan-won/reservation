@@ -1,33 +1,32 @@
 package seunghwan.won.dto;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class DisplayInfoJoinProductJoinReservationUserCommentJoinReservationInfoJoinReservationCommentImageJoinFileInfo {
     private int commentId;
     private int productId;
-    private int reservationId;
+    private int reservationInfoId;
     private float score;
     private String reservationName;
     private String reservationTelephone;
     private String reservationEmail;
     private String reservationDate;
     private String comment;
-    private List<ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo> commentImage;
-    private Date createDate;
-    private Date modifyDate;
+    private List<ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo> commentImages;
+    private String createDate;
+    private String modifyDate;
 
     public int getCommentId() {
         return commentId;
     }
 
-    public List<ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo> getCommentImage() {
-        return commentImage;
+    public List<ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo> getCommentImages() {
+        return commentImages;
     }
 
-    public void setCommentImage(List<ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo> commentImage) {
-        this.commentImage = commentImage;
+    public void setCommentImages(List<ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo> commentImages) {
+        this.commentImages = commentImages;
     }
 
     public void setCommentId(int commentId) {
@@ -42,12 +41,12 @@ public class DisplayInfoJoinProductJoinReservationUserCommentJoinReservationInfo
         this.productId = productId;
     }
 
-    public int getReservationId() {
-        return reservationId;
+    public int getReservationInfoId() {
+        return reservationInfoId;
     }
 
-    public void setReservationId(int reservationId) {
-        this.reservationId = reservationId;
+    public void setReservationInfoId(int reservationInfoId) {
+        this.reservationInfoId = reservationInfoId;
     }
 
     public float getScore() {
@@ -98,19 +97,19 @@ public class DisplayInfoJoinProductJoinReservationUserCommentJoinReservationInfo
         this.comment = comment;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
-    public Date getModifyDate() {
+    public String getModifyDate() {
         return modifyDate;
     }
 
-    public void setModifyDate(Date modifyDate) {
+    public void setModifyDate(String modifyDate) {
         this.modifyDate = modifyDate;
     }
 
@@ -119,14 +118,14 @@ public class DisplayInfoJoinProductJoinReservationUserCommentJoinReservationInfo
         return "DisplayInfoJoinProductJoinReservationUserCommentJoinReservationInfoJoinReservationCommentImageJoinFileInfo{" +
                 "commentId=" + commentId +
                 ", productId=" + productId +
-                ", reservationId=" + reservationId +
+                ", reservationInfoId=" + reservationInfoId +
                 ", score=" + score +
                 ", reservationName='" + reservationName + '\'' +
                 ", reservationTelephone='" + reservationTelephone + '\'' +
                 ", reservationEmail='" + reservationEmail + '\'' +
                 ", reservationDate='" + reservationDate + '\'' +
                 ", comment='" + comment + '\'' +
-                ", commentImage=" + commentImage +
+                ", commentImages=" + commentImages +
                 ", createDate=" + createDate +
                 ", modifyDate=" + modifyDate +
                 '}';
@@ -140,21 +139,21 @@ public class DisplayInfoJoinProductJoinReservationUserCommentJoinReservationInfo
                 (DisplayInfoJoinProductJoinReservationUserCommentJoinReservationInfoJoinReservationCommentImageJoinFileInfo) o;
         return commentId == that.commentId &&
                 productId == that.productId &&
-                reservationId == that.reservationId &&
+                reservationInfoId == that.reservationInfoId &&
                 Float.compare(that.score, score) == 0 &&
                 Objects.equals(reservationName, that.reservationName) &&
                 Objects.equals(reservationTelephone, that.reservationTelephone) &&
                 Objects.equals(reservationEmail, that.reservationEmail) &&
                 Objects.equals(reservationDate, that.reservationDate) &&
                 Objects.equals(comment, that.comment) &&
-                Objects.equals(commentImage, that.commentImage) &&
+                Objects.equals(commentImages, that.commentImages) &&
                 Objects.equals(createDate, that.createDate) &&
                 Objects.equals(modifyDate, that.modifyDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(commentId, productId, reservationId, score, reservationName, reservationTelephone,
-                reservationEmail, reservationDate, comment, commentImage, createDate, modifyDate);
+        return Objects.hash(commentId, productId, reservationInfoId, score, reservationName, reservationTelephone,
+                reservationEmail, reservationDate, comment, commentImages, createDate, modifyDate);
     }
 }

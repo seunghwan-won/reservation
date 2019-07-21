@@ -6,13 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="utf-8">
     <meta name="description" productContent="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
-    <meta name="viewport" productContent="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <meta name="viewport"
+          productContent="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resource/css/style.css" rel="stylesheet">
     <style>
@@ -27,7 +30,8 @@
     <div class="header fade">
         <header class="header_tit">
             <h1 class="logo">
-                <a href="https://m.naver.com/" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
+                <a href="https://m.naver.com/" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span>
+                </a>
                 <a href="reservation" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
             </h1>
             <a href="#" class="btn_my"> <span title="예약확인">예약확인</span> </a>
@@ -38,54 +42,38 @@
             <div class="section_visual">
                 <header>
                     <h1 class="logo">
-                        <a href="https://m.naver.com/" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
-                        <a href="reservation" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
+                        <a href="https://m.naver.com/" class="lnk_logo" title="네이버"> <span
+                                class="spr_bi ico_n_logo">네이버</span> </a>
+                        <a href="reservation" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span>
+                        </a>
                     </h1>
-                    <a href="./myreservation.html" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a>
+                    <a href="./myreservation.html" class="btn_my"> <span class="viewReservation"
+                                                                         title="예약확인">예약확인</span> </a>
                 </header>
                 <div class="pagination">
                     <div class="bg_pagination"></div>
                     <div class="figure_pagination">
                         <span class="num">1</span>
-                        <span class="num off">/ <span>2</span></span>
+                        <span class="num off">/ <span>${productImageList.size()}</span></span>
                     </div>
                 </div>
                 <div class="group_visual">
                     <div>
                         <div class="container_visual" style="width: 414px;">
                             <ul class="visual_img detail_swipe">
-                                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                    <div class="visual_txt">
-                                        <div class="visual_txt_inn">
-                                            <h2 class="visual_txt_tit"> <span></span> </h2>
-                                            <p class="visual_txt_dsc"></p>
+                                <c:forEach items="${productImageList}" var="productImageList">
+                                    <li class="item" style="width: 414px;"><img alt="" class="img_thumb"
+                                                                                src="http://127.0.0.1:8080/api/productImages/detail/${productImageList.saveFileName}">
+                                        <span
+                                                class="img_bg"></span>
+                                        <div class="visual_txt">
+                                            <div class="visual_txt_inn">
+                                                <h2 class="visual_txt_tit"><span></span></h2>
+                                                <p class="visual_txt_dsc">${displayInfo.productDescription}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                    <div class="visual_txt">
-                                        <div class="visual_txt_inn">
-                                            <h2 class="visual_txt_tit"> <span></span> </h2>
-                                            <p class="visual_txt_dsc"></p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                    <div class="visual_txt">
-                                        <div class="visual_txt_inn">
-                                            <h2 class="visual_txt_tit"> <span></span> </h2>
-                                            <p class="visual_txt_dsc"></p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                    <div class="visual_txt">
-                                        <div class="visual_txt_inn">
-                                            <h2 class="visual_txt_tit"> <span></span> </h2>
-                                            <p class="visual_txt_dsc"></p>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                </c:forEach>
                             </ul>
                         </div>
                         <div class="prev">
@@ -105,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="group_btn_goto"  style="display: none;">
+                <div class="group_btn_goto" style="display: none;">
                     <a class="btn_goto_home" title="홈페이지" href="#" target="siteUrl"> <i class="fn fn-home1"></i> </a>
                     <a class="btn_goto_tel" title="전화" href="#"> <i class="fn fn-call1"></i> </a>
                     <a class="btn_goto_mail" title="이메일" href="#"> <i class="fn fn-mail1"></i> </a>
@@ -117,23 +105,28 @@
                 <!-- [D] 펼쳐보기 클릭 시 store_details에 close3 제거 -->
                 <div class="store_details close3">
                     <p class="dsc">
+                        ${displayInfo.productContent}
                     </p>
                 </div>
                 <!-- [D] 토글 상황에 따라 bk_more에 display:none 추가 -->
-                <a href="#" class="bk_more _open"> <span class="bk_more_txt">펼쳐보기</span> <i class="fn fn-down2"></i> </a>
-                <a href="#" class="bk_more _close" style="display: none;"> <span class="bk_more_txt">접기</span> <i class="fn fn-up2"></i> </a>
+                <a class="bk_more _open"> <span class="bk_more_txt">펼쳐보기</span> <i class="fn fn-down2"></i>
+                </a>
+                <a class="bk_more _close" style="display: none;"> <span class="bk_more_txt">접기</span> <i
+                        class="fn fn-up2"></i> </a>
             </div>
             <div class="section_event">
                 <div class="event_info_box">
                     <div class="event_info_tit">
-                        <h4 class="in_tit"> <i class="spr_book ico_evt"></i> <span>이벤트 정보</span> </h4>
+                        <h4 class="in_tit"><i class="spr_book ico_evt"></i> <span>이벤트 정보</span></h4>
                     </div>
                     <div class="event_info">
                         <div class="in_dsc">[네이버예약 특별할인]<br>R석 50%, S석 60% 할인</div>
                     </div>
                 </div>
             </div>
-            <div class="section_btn"> <button type="button" class="bk_btn"> <i class="fn fn-nbooking-calender2"></i> <span>예매하기</span> </button> </div>
+            <div class="section_btn">
+                <button type="button" class="bk_btn"><i class="fn fn-nbooking-calender2"></i> <span>예매하기</span></button>
+            </div>
             <div class="section_review_list">
                 <div class="review_box">
                     <h3 class="title_h3">예매자 한줄평</h3>
@@ -141,50 +134,40 @@
                         <div class="grade_area">
                             <!-- [D] 별점 graph_value는 퍼센트 환산하여 width 값을 넣어줌 -->
                             <span class="graph_mask"> <em class="graph_value" style="width: 84%;"></em> </span>
-                            <strong class="text_value"> <span>4.2</span> <em class="total">5.0</em> </strong>
-                            <span class="join_count"><em class="green">52건</em> 등록</span>
+                            <strong class="text_value"> <span>${averageScore}</span> <em class="total">5.0</em>
+                            </strong>
+                            <span class="join_count"><em class="green">${commentList.size()}건</em> 등록</span>
                         </div>
                         <ul class="list_short_review">
-                            <li class="list_item">
-                                <div>
-                                    <div class="review_area">
-                                        <div class="thumb_area">
-                                            <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90" class="img_vertical_top" src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" alt="리뷰이미지"> </a> <span class="img_count" style="display:none;">1</span>                                                </div>
-                                        <h4 class="resoc_name"></h4>
-                                        <p class="review">2층이어서 걱정했는데 꽤잘보여서 좋았습니다 고미오 너무 멋있었습니다 사진은 커튼콜때 찍었습니다 끝나고 퇴근길도 봐서 너무 좋았어요</p>
+                            <c:forEach items="${commentList}" var="comment">
+                                <li class="list_item">
+                                    <div>
+                                        <div class="review_area">
+                                            <div class="thumb_area">
+                                                <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90"
+                                                                                                  class="img_vertical_top"
+                                                                                                  src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300"
+                                                                                                  alt="리뷰이미지"> </a>
+                                                <span
+                                                        class="img_count" style="display:none;">1</span></div>
+                                            <h4 class="resoc_name"></h4>
+                                            <p class="review">${comment.comment}</p>
+                                        </div>
+                                        <div class="info_area">
+                                            <div class="review_info"><span class="grade"> ${comment.score}</span> <span
+                                                    class="name">${comment.reservationEmail}</span>
+                                                <span class="date"></span></div>
+                                        </div>
                                     </div>
-                                    <div class="info_area">
-                                        <div class="review_info"> <span class="grade">4.0</span> <span class="name">dbfl****</span> <span class="date">2017.3.5. 방문</span> </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list_item">
-                                <div>
-                                    <div class="review_area no_img">
-                                        <h4 class="resoc_name"></h4>
-                                        <p class="review">너무 재밌게봤구요~<br>마지막공연 후 뒷풀이도 잘봤습니다</p>
-                                    </div>
-                                    <div class="info_area">
-                                        <div class="review_info"> <span class="grade">5.0</span> <span class="name">yyck****</span> <span class="date">2017.3.5. 방문</span> </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list_item">
-                                <div>
-                                    <div class="review_area no_img">
-                                        <h4 class="resoc_name"></h4>
-                                        <p class="review">좋은 공연이었습니다. <br>머큐쇼역활 하신분의 열창이 기억에 남는 반면에,,, 로미오는 별로 기억에 남지 않네요..</p>
-                                    </div>
-                                    <div class="info_area">
-                                        <div class="review_info"> <span class="grade">4.0</span> <span class="name">xero****</span> <span class="date">2017.3.4. 방문</span> </div>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            </c:forEach>
                         </ul>
                     </div>
-                    <p class="guide"> <i class="spr_book2 ico_bell"></i> <span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span> </p>
+                    <p class="guide"><i class="spr_book2 ico_bell"></i> <span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span>
+                    </p>
                 </div>
-                <a class="btn_review_more" href="./review.html"> <span>예매자 한줄평 더보기</span> <i class="fn fn-forward1"></i> </a>
+                <a class="btn_review_more" href="/review"> <span>예매자 한줄평 더보기</span> <i class="fn fn-forward1"></i>
+                </a>
             </div>
             <div class="section_info_tab">
                 <!-- [D] tab 선택 시 anchor에 active 추가 -->
@@ -207,9 +190,11 @@
                                     <p class="in_dsc">
                                     </p>
                                 </li>
-                                <li class="detail_info_lst"> <strong class="in_tit">[공지사항]</strong>
+                                <li class="detail_info_lst"><strong class="in_tit">[공지사항]</strong>
                                     <ul class="in_img_group">
-                                        <li class="in_img_lst"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170131_238/14858250829398Pnx6_JPEG/%B0%F8%C1%F6%BB%E7%C7%D7.jpg?type=a1000"> </li>
+                                        <li class="in_img_lst"><img alt="" class="img_thumb"
+                                                                    src="https://ssl.phinf.net/naverbooking/20170131_238/14858250829398Pnx6_JPEG/%B0%F8%C1%F6%BB%E7%C7%D7.jpg?type=a1000">
+                                        </li>
                                     </ul>
                                 </li>
                                 <!-- <li class="detail_info_lst"> <strong class="in_tit">[공연정보]</strong>
@@ -225,7 +210,8 @@
                 <div class="detail_location hide">
                     <div class="box_store_info no_topline">
                         <a href="#" class="store_location" title="지도웹으로 연결">
-                            <img class="store_map img_thumb" alt="map" src="https://simg.pstatic.net/static.map/image?version=1.1&amp;crs=EPSG:4326&amp;baselayer=bl_vc_bg&amp;exception=xml&amp;scale=2&amp;caller=mw_smart_booking&amp;overlayers=ol_vc_an&amp;center=127.0011948,37.5717079&amp;markers=type,default2,127.0011948,37.5717079&amp;level=11&amp;w=340&amp;h=150">
+                            <img class="store_map img_thumb" alt="map"
+                                 src="https://simg.pstatic.net/static.map/image?version=1.1&amp;crs=EPSG:4326&amp;baselayer=bl_vc_bg&amp;exception=xml&amp;scale=2&amp;caller=mw_smart_booking&amp;overlayers=ol_vc_an&amp;center=127.0011948,37.5717079&amp;markers=type,default2,127.0011948,37.5717079&amp;level=11&amp;w=340&amp;h=150">
                             <span class="img_border"></span>
                             <span class="btn_map"><i class="spr_book2 ico_mapview"></i></span>
                         </a>
@@ -242,14 +228,17 @@
                             </div>
                             <div class="lst_store_info_wrap">
                                 <ul class="lst_store_info">
-                                    <li class="item"> <span class="item_lt"> <i class="fn fn-call2"></i> <span class="sr_only">전화번호</span> </span> <span class="item_rt"> <a href="tel:02-548-0597" class="store_tel">02-548-0597</a></span> </li>
+                                    <li class="item"><span class="item_lt"> <i class="fn fn-call2"></i> <span
+                                            class="sr_only">전화번호</span> </span> <span class="item_rt"> <a
+                                            href="tel:02-548-0597" class="store_tel">02-548-0597</a></span></li>
                                 </ul>
                             </div>
                         </div>
                         <!-- [D] 모바일 브라우저에서 접근 시 column2 추가와 btn_navigation 요소 추가 -->
                         <div class="bottom_common_path column2">
                             <a href="#" class="btn_path"> <i class="fn fn-path-find2"></i> <span>길찾기</span> </a>
-                            <a href="#" class="btn_navigation before"> <i class="fn fn-navigation2"></i> <span>내비게이션</span> </a>
+                            <a href="#" class="btn_navigation before"> <i class="fn fn-navigation2"></i>
+                                <span>내비게이션</span> </a>
                         </div>
                     </div>
                 </div>
@@ -267,6 +256,19 @@
     </div>
 </footer>
 <div id="photoviwer"></div>
+<script src="/resource/js/detail.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+<script type="rv-template" id="itemList">
+    <li class="item" style="width: 414px;"><img alt="" class="img_thumb" src="http://localhost:8080/image/{{ocation}}">
+        <span class="img_bg"></span>
+        <div class="visual_txt">
+            <div class="visual_txt_inn">
+                <h2 class="visual_txt_tit"><span></span></h2>
+                <p class="visual_txt_dsc"></p>
+            </div>
+        </div>
+    </li>
+</script>
 </body>
 
 

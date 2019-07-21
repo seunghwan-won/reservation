@@ -31,6 +31,12 @@ public class ProductImageServiceImplement implements ProductImageService {
         return getBytes(request, url);
     }
 
+    @Override
+    @Transactional
+    public byte[] getProductImageUrl(String imagePath, HttpServletRequest request) {
+        return getBytes(request, imagePath);
+    }
+
     private byte[] getBytes(HttpServletRequest request, String url) {
         String imagePath = request.getServletContext().getRealPath("resource/" + url);
         InputStream imageStream = null;

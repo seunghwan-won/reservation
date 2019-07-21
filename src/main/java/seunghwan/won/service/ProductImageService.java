@@ -6,4 +6,6 @@ public interface ProductImageService {
     byte[] getPromotionImageUrl(int productId, int productImageId, String type, HttpServletRequest request);
 
     byte[] getProductImageUrl(int id, String type, HttpServletRequest request);
+
+    byte[] getProductImageUrl(String imagePath, HttpServletRequest request);
 }

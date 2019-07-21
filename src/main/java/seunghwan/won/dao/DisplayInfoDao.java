@@ -1,5 +1,6 @@
 package seunghwan.won.dao;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -21,6 +22,7 @@ public class DisplayInfoDao {
     private RowMapper<?> displayInfoJoinDisplayInfoImageJoinFileInfoMapper;
     private RowMapper<?> displayInfoJoinProductJoinReservationUserCommentJoinReservationInfoJoinReservationCommentImageJoinFileInfoMapper;
     private RowMapper<?> displayInfoJoinProductJoinProductPriceMapper;
+    private RowMapper<?> reservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfoMapper;
     private SimpleJdbcInsert insert;
     private final String TABLE_NAME = "display_info";
 
@@ -74,12 +76,25 @@ public class DisplayInfoDao {
     }
 
     public double getAverageScore(int displayInfoId) {
-        return jdbcTemplate.queryForObject(CALC_AVERAGE, Collections.singletonMap(DaoUtil.ID, displayInfoId), Double.class);
+        try {
+            return jdbcTemplate.queryForObject(CALC_AVERAGE, Collections.singletonMap(DaoUtil.ID, displayInfoId), Double.class);
+        } catch (NullPointerException e) {
+            return 0;
+        }
+
     }
 
     public List<DisplayInfoJoinProductJoinProductPrice> getProductPrice(int displayInfoId) {
         this.displayInfoJoinProductJoinProductPriceMapper = DaoUtil.getRowMapper(DisplayInfoJoinProductJoinProductPrice.class);
         return (List<DisplayInfoJoinProductJoinProductPrice>) jdbcTemplate.query(SELECT_PRODUCT_PRICE,
                 Collections.singletonMap(DaoUtil.ID, displayInfoId), displayInfoJoinProductJoinProductPriceMapper);
+    }
+
+    public List<ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo> getCommentList(int displayInfoId) {
+        this.reservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfoMapper =
+                DaoUtil.getRowMapper(ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo.class);
+        return (List<ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo>)
+                jdbcTemplate.query(SELECT_COMMENT_IMAGE,Collections.singletonMap(DaoUtil.ID, displayInfoId),
+                        reservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfoMapper);
     }
 }

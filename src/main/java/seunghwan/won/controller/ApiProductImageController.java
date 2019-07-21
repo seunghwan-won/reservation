@@ -34,4 +34,15 @@ public class ApiProductImageController {
             HttpServletRequest request) throws IOException {
         return productImageService.getProductImageUrl(id, type, request);
     }
+
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+    @GetMapping(path = "detail/img/{resourcePath}", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody
+    byte[] getProductImageByUrl(
+            @PathVariable(name = "resourcePath", required = true) String resourcePath, HttpServletRequest request) throws IOException {
+        StringBuilder sb = new StringBuilder("img/");
+        sb.append(resourcePath);
+        sb.append(".png");
+        return productImageService.getProductImageUrl(sb.toString(), request);
+    }
 }
