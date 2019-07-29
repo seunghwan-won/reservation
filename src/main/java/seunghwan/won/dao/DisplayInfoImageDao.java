@@ -8,8 +8,9 @@ import seunghwan.won.dto.DisplayInfoImage;
 
 import javax.sql.DataSource;
 
-import static seunghwan.won.dao.sqls.DisplayInfoImageDaoSqls.DELETE_BY_ID;
-import static seunghwan.won.dao.sqls.DisplayInfoImageDaoSqls.SELECT_BY_ID;
+import java.util.Collections;
+
+import static seunghwan.won.dao.sqls.DisplayInfoImageDaoSqls.*;
 
 @Repository
 public class DisplayInfoImageDao {
@@ -34,5 +35,9 @@ public class DisplayInfoImageDao {
 
     public int deleteDisplayInfoImageById(int id) {
         return DaoUtil.delete(jdbcTemplate, DELETE_BY_ID, id);
+    }
+
+    public String getMapImagePath(int id) {
+        return jdbcTemplate.queryForObject(SELECT_PATH_BY_ID, Collections.singletonMap("id", id), String.class);
     }
 }
