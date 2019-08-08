@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -38,7 +39,7 @@
             <div class="group_visual">
                 <div class="container_visual" style="width: 414px;">
                     <ul class="visual_img">
-                        <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170217_264/1487312141947lTddT_JPEG/%B3%D7%C0%CC%B9%F6.jpg?type=ff1242_816"> <span class="img_bg"></span>
+                        <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="http://127.0.0.1:8080/api/img/display?id=1"> <span class="img_bg"></span>
                             <div class="preview_txt">
                                 <h2 class="preview_txt_tit"></h2> <em class="preview_txt_dsc">₩12,000 ~ </em><em class="preview_txt_dsc">2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매</em> </div>
                         </li>
@@ -65,7 +66,8 @@
                 <div class="ticket_body">
                     <div class="qty">
                         <div class="count_control">
-                            <!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input에 disabled 각각 추가, 수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
+                            <!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input에 disabled 각각 추가,
+                                수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
                             <div class="clearfix">
                                 <a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
                                 <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
@@ -79,33 +81,33 @@
                     <div class="qty">
                         <div class="count_control">
                             <div class="clearfix">
-                                <a href="#" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="10" readonly title="수량">
+                                <a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
                                 <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
                                 </a>
                             </div>
-                            <div class="individual_price on_color"><span class="total_price">68,000</span><span class="price_type">원</span></div>
+                            <div class="individual_price"><span class="total_price">0</span><span class="price_type">원</span></div>
                         </div>
                         <div class="qty_info_icon"> <strong class="product_amount"> <span>유아</span> </strong> <strong class="product_price"> <span class="price">6,800</span> <span class="price_type">원</span> </strong> <em class="product_dsc">6,800원 (15% 할인가)</em> </div>
                     </div>
                     <div class="qty">
                         <div class="count_control">
                             <div class="clearfix">
-                                <a href="#" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="3" readonly title="수량">
+                                <a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
                                 <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
                                 </a>
                             </div>
-                            <div class="individual_price on_color"><span class="total_price">60,000</span><span class="price_type">원</span></div>
+                            <div class="individual_price"><span class="total_price">0</span><span class="price_type">원</span></div>
                         </div>
                         <div class="qty_info_icon"> <strong class="product_amount"> <span>세트1</span> </strong> <strong class="product_price"> <span class="price">20,000</span> <span class="price_type">원</span> </strong> <em class="product_dsc">2인 관람권 (17% 할인가)</em> </div>
                     </div>
                     <div class="qty">
                         <div class="count_control">
                             <div class="clearfix">
-                                <a href="#" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="3" readonly title="수량">
+                                <a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
                                 <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
                                 </a>
                             </div>
-                            <div class="individual_price on_color"><span class="total_price">25,500</span><span class="price_type">원</span></div>
+                            <div class="individual_price "><span class="total_price">0</span><span class="price_type">원</span></div>
                         </div>
                         <div class="qty_info_icon"> <strong class="product_amount"> <span>청소년</span> </strong> <strong class="product_price"> <span class="price">8,500</span> <span class="price_type">원</span> </strong> <em class="product_dsc">8,500원 (15% 할인가)</em> </div>
                     </div>
@@ -131,7 +133,7 @@
                             </div>
                             <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                 <div class="inline_control">
-                                    <p class="inline_txt selected">2017.2.17, 총 <span id="totalCount">16</span>매</p>
+                                    <p class="inline_txt selected">${year}.${month}.${day}, 총 <span id="totalCount">0</span>매</p>
                                 </div>
                             </div>
                         </form>
@@ -175,8 +177,11 @@
     </div>
 </footer>
 
-
+<script type="rv-template" id="tiketCount">
+    <input type="tel" class="count_control_input disabled" value={count} readonly="" title="수량"></script>
+<script src="/resource/js/reserve.js"></script>
 </body>
 
 </html>
+
 

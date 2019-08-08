@@ -40,4 +40,8 @@ public class DisplayInfoImageDao {
     public String getMapImagePath(int id) {
         return jdbcTemplate.queryForObject(SELECT_PATH_BY_ID, Collections.singletonMap("id", id), String.class);
     }
+
+    public String getDisplayImagePath(int id) {
+        return jdbcTemplate.queryForObject(SELECT_MAIN_IMAGE_BY_DISPLAY_ID, Collections.singletonMap("id", id), String.class);
+    }
 }

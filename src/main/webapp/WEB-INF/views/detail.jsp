@@ -125,6 +125,7 @@
                 </div>
             </div>
             <div class="section_btn">
+                <input type="hidden" value="${displayInfo.displayInfoId}" id="displayInfoId">
                 <button type="button" class="bk_btn"><i class="fn fn-nbooking-calender2"></i> <span>예매하기</span></button>
             </div>
             <div class="section_review_list">
@@ -140,86 +141,93 @@
                         </div>
                         <ul class="list_short_review">
                             <%--                            <c:forEach items="${commentList}" var="comment">--%>
-                            <li class="list_item">
-                                <div>
-                                    <div class="review_area">
-                                        <div class="thumb_area">
-                                            <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90"
-                                                                                              class="img_vertical_top"
-                                                                                              src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300"
-                                                                                              alt="리뷰이미지"> </a>
-                                            <span
-                                                    class="img_count" style="display:none;">1</span></div>
-                                        <h4 class="resoc_name"></h4>
-                                        <p class="review">${commentList[0].comment}</p>
+                            <c:if test="${commentList[0] != null}">
+                                <li class="list_item">
+                                    <div>
+                                        <div class="review_area">
+                                            <div class="thumb_area">
+                                                <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90"
+                                                                                                  class="img_vertical_top"
+                                                                                                  src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300"
+                                                                                                  alt="리뷰이미지"> </a>
+                                                <span
+                                                        class="img_count" style="display:none;">1</span></div>
+                                            <h4 class="resoc_name"></h4>
+                                            <p class="review">${commentList[0].comment}</p>
+                                        </div>
+                                        <div class="info_area">
+                                            <div class="review_info"><span class="grade"> ${commentList[0].score}</span>
+                                                <span
+                                                        class="name">${commentList[0].reservationEmail}</span>
+                                                <span class="date"></span></div>
+                                        </div>
                                     </div>
-                                    <div class="info_area">
-                                        <div class="review_info"><span class="grade"> ${commentList[0].score}</span>
-                                            <span
-                                                    class="name">${commentList[0].reservationEmail}</span>
-                                            <span class="date"></span></div>
+                                </li>
+                            </c:if>
+                            <c:if test="${commentList[1] != null}">
+                                <li class="list_item">
+                                    <div>
+                                        <div class="review_area">
+                                            <div class="thumb_area">
+                                                <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90"
+                                                                                                  class="img_vertical_top"
+                                                                                                  src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300"
+                                                                                                  alt="리뷰이미지"> </a>
+                                                <span
+                                                        class="img_count" style="display:none;">1</span></div>
+                                            <h4 class="resoc_name"></h4>
+                                            <p class="review">${commentList[1].comment}</p>
+                                        </div>
+                                        <div class="info_area">
+                                            <div class="review_info"><span class="grade"> ${commentList[1].score}</span>
+                                                <span
+                                                        class="name">${commentList[1].reservationEmail}</span>
+                                                <span class="date"></span></div>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="list_item">
-                                <div>
-                                    <div class="review_area">
-                                        <div class="thumb_area">
-                                            <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90"
-                                                                                              class="img_vertical_top"
-                                                                                              src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300"
-                                                                                              alt="리뷰이미지"> </a>
-                                            <span
-                                                    class="img_count" style="display:none;">1</span></div>
-                                        <h4 class="resoc_name"></h4>
-                                        <p class="review">${commentList[1].comment}</p>
+                                </li>
+                            </c:if>
+                            <c:if test="${commentList[2] != null}">
+                                <li class="list_item">
+                                    <div>
+                                        <div class="review_area">
+                                            <div class="thumb_area">
+                                                <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90"
+                                                                                                  class="img_vertical_top"
+                                                                                                  src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300"
+                                                                                                  alt="리뷰이미지"> </a>
+                                                <span
+                                                        class="img_count" style="display:none;">1</span></div>
+                                            <h4 class="resoc_name"></h4>
+                                            <p class="review">${commentList[2].comment}</p>
+                                        </div>
+                                        <div class="info_area">
+                                            <div class="review_info"><span class="grade"> ${commentList[2].score}</span>
+                                                <span
+                                                        class="name">${commentList[2].reservationEmail}</span>
+                                                <span class="date"></span></div>
+                                        </div>
                                     </div>
-                                    <div class="info_area">
-                                        <div class="review_info"><span class="grade"> ${commentList[1].score}</span>
-                                            <span
-                                                    class="name">${commentList[1].reservationEmail}</span>
-                                            <span class="date"></span></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list_item">
-                                <div>
-                                    <div class="review_area">
-                                        <div class="thumb_area">
-                                            <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90"
-                                                                                              class="img_vertical_top"
-                                                                                              src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300"
-                                                                                              alt="리뷰이미지"> </a>
-                                            <span
-                                                    class="img_count" style="display:none;">1</span></div>
-                                        <h4 class="resoc_name"></h4>
-                                        <p class="review">${commentList[2].comment}</p>
-                                    </div>
-                                    <div class="info_area">
-                                        <div class="review_info"><span class="grade"> ${commentList[2].score}</span>
-                                            <span
-                                                    class="name">${commentList[2].reservationEmail}</span>
-                                            <span class="date"></span></div>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            </c:if>
                             <%--                            </c:forEach>--%>
                         </ul>
                     </div>
                     <p class="guide"><i class="spr_book2 ico_bell"></i> <span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span>
                     </p>
                 </div>
-                <a class="btn_review_more" href="/review?id=${displayInfo.productId}"> <span>예매자 한줄평 더보기</span> <i class="fn fn-forward1"></i>
+                <a class="btn_review_more" href="/review?id=${displayInfo.productId}"> <span>예매자 한줄평 더보기</span> <i
+                        class="fn fn-forward1"></i>
                 </a>
             </div>
             <div class="section_info_tab">
                 <!-- [D] tab 선택 시 anchor에 active 추가 -->
                 <ul class="info_tab_lst">
                     <li class="item active _detail">
-                        <a  class="anchor active"> <span>상세정보</span> </a>
+                        <a class="anchor active"> <span>상세정보</span> </a>
                     </li>
                     <li class="item _path">
-                        <a  class="anchor"> <span>오시는길</span> </a>
+                        <a class="anchor"> <span>오시는길</span> </a>
                     </li>
                 </ul>
                 <!-- [D] 상세정보 외 다른 탭 선택 시 detail_area_wrap에 hide 추가 -->
@@ -241,9 +249,9 @@
                                     </ul>
                                 </li>
                                 <!-- <li class="detail_info_lst"> <strong class="in_tit">[공연정보]</strong>
-                                    <ul class="in_img_group">
-                                        <li class="in_img_lst"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170131_255/1485825099482NmYMe_JPEG/%B0%F8%BF%AC%C1%A4%BA%B8.jpg?type=a1000"> </li>
-                                    </ul>
+                                <ul class="in_img_group">
+                                <li class="in_img_lst"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170131_255/1485825099482NmYMe_JPEG/%B0%F8%BF%AC%C1%A4%BA%B8.jpg?type=a1000"> </li>
+                                </ul>
                                 </li> -->
                             </ul>
                         </div>
@@ -254,8 +262,8 @@
                     <div class="box_store_info no_topline">
                         <a href="#" class="store_location" title="지도웹으로 연결">
                             <img class="store_map img_thumb" alt="map"
-<%--                                 src="https://simg.pstatic.net/static.map/image?version=1.1&amp;crs=EPSG:4326&amp;baselayer=bl_vc_bg&amp;exception=xml&amp;scale=2&amp;caller=mw_smart_booking&amp;overlayers=ol_vc_an&amp;center=127.0011948,37.5717079&amp;markers=type,default2,127.0011948,37.5717079&amp;level=11&amp;w=340&amp;h=150">--%>
-                                src="api/img/map?id=${displayInfo.displayInfoId}"
+                            <%--                                 src="https://simg.pstatic.net/static.map/image?version=1.1&amp;crs=EPSG:4326&amp;baselayer=bl_vc_bg&amp;exception=xml&amp;scale=2&amp;caller=mw_smart_booking&amp;overlayers=ol_vc_an&amp;center=127.0011948,37.5717079&amp;markers=type,default2,127.0011948,37.5717079&amp;level=11&amp;w=340&amp;h=150">--%>
+                                 src="api/img/map?id=${displayInfo.displayInfoId}"
                             <span class="img_border"></span>
                             <span class="btn_map"><i class="spr_book2 ico_mapview"></i></span>
                         </a>
@@ -274,7 +282,8 @@
                                 <ul class="lst_store_info">
                                     <li class="item"><span class="item_lt"> <i class="fn fn-call2"></i> <span
                                             class="sr_only">전화번호</span> </span> <span class="item_rt"> <a
-                                            href="tel:02-548-0597" class="store_tel">${displayInfo.telephone}</a></span></li>
+                                            href="tel:02-548-0597" class="store_tel">${displayInfo.telephone}</a></span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

@@ -22,6 +22,12 @@ public class ImageServiceImplement implements ImageService {
         return getBytes(request, path);
     }
 
+    @Override
+    public byte[] getDisplayImage(int displayInfoId, HttpServletRequest request) {
+        String path = displayInfoImageDao.getDisplayImagePath(displayInfoId);
+        return getBytes(request, path);
+    }
+
     private byte[] getBytes(HttpServletRequest request, String url) {
         String imagePath = request.getServletContext().getRealPath("resource/" + url);
         InputStream imageStream = null;

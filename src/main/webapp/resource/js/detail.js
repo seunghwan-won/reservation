@@ -1,8 +1,7 @@
 let btn = document.querySelector(".bk_btn");
 btn.addEventListener("click", function () {
-    let ajax = new XMLHttpRequest();
-    ajax.open("GET", "http://localhost:8080/reservation");
-    ajax.send();
+    let id = document.querySelector("#displayInfoId").value;
+    window.location.href = "http://127.0.0.1:8080/reservation?id=" + id;
 });
 
 let openButton = document.querySelector("._open");
@@ -27,17 +26,17 @@ let infoTab = document.querySelector(".info_tab_lst");
 infoTab.addEventListener("click", function () {
     let area = document.querySelector(".detail_area_wrap");
     let location = document.querySelector(".detail_location");
-    let detail =document.querySelector("._detail").firstElementChild;
+    let detail = document.querySelector("._detail").firstElementChild;
     let path = document.querySelector("._path").firstElementChild;
-    if(event.target.innerText === "상세정보") {
+    if (event.target.innerText === "상세정보") {
         area.className = "detail_area_wrap";
-        location.className="detail_location hide";
-        detail.className ="anchor active";
+        location.className = "detail_location hide";
+        detail.className = "anchor active";
         path.className = "anchor";
-    } else if(event.target.innerText === "오시는길") {
+    } else if (event.target.innerText === "오시는길") {
         area.className = "detail_area_wrap hide";
-        location.className="detail_location";
-        detail.className ="anchor";
+        location.className = "detail_location";
+        detail.className = "anchor";
         path.className = "anchor active";
     }
 });

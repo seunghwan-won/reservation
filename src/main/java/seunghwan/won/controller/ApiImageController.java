@@ -18,4 +18,11 @@ public class ApiImageController {
     byte[] mapImage(@RequestParam(name = "id", required = true) int displayInfoId, HttpServletRequest request) {
         return imageService.getMapImage(displayInfoId, request);
     }
+
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+    @GetMapping(path = "display", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody
+    byte[] displayImage(@RequestParam(name = "id", required = true) int displayInfoId, HttpServletRequest request) {
+        return imageService.getDisplayImage(displayInfoId, request);
+    }
 }
