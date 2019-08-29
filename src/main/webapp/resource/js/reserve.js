@@ -4,13 +4,14 @@ let telValid;
 let emailValid;
 // 예약 데이터 불러오기
 (function () {
-    var para = document.location.href.split("?");
+    const url = new URLSearchParams(document.location.href);
+    // const displayInfoId = url.get("http://127.0.0.1:8080/reservation?id");
+    const displayInfoId = url.get("reservation?id");
     let ajax = new XMLHttpRequest();
     ajax.addEventListener("load", function () {
         data = JSON.parse(this.response);
-
     })
-    ajax.open("GET", "http://localhost:8080/api/reservation/1")
+    ajax.open("GET", "/api/reservation/" + displayInfoId, true);
     ajax.send();
 }());
 
@@ -19,207 +20,214 @@ let emailValid;
     document.querySelector(".visual_img > li").style.animation = "none";
 }());
 
-// 티켓 이벤트
-(function () {
-    document.querySelector(".ticket_body").addEventListener("click", function () {
-        event.preventDefault();
-        let target = event.target;
-        if (target.className.indexOf("btn_plus_minus") !== -1) {
 
-            if (target.title === "더하기") {
-                // 더하기로 발생되는 이벤트 실행
-                /*
-                    카운트값을 1증가 시키기
-                    금액 변화
-                    처음에 값이 disable class들  없애기
-                        금액 클래스 on_color주기
-                 */
-                // increaseCount(target);
-                let presentValue = Number(target.previousSibling.previousSibling.value);
-                let nextValue = presentValue += 1;
+// #1 설명UI
 
-                let html = document.querySelector("#tiketCount").innerHTML;
-                html = html.replace("{count}", nextValue);
-                target.previousSibling.previousSibling.value = nextValue;
-                let parent = target.parentNode
-                let replaceNode = target.parentNode.children[1];
-                let element = document.createElement("input");
-                element.type = "tel";
-                element.setAttribute("class", "count_control_input");
-                element.setAttribute("value", nextValue);
-                element.setAttribute("readonly", "");
-                element.title = "수량";
-                target.parentNode.replaceChild(element, replaceNode);
+// #2 티켓선택UI
+function Ticket(ticketElement) {
+    this.ticketElement = ticketElement;
+    this.ticketCount = 0;
+    this.maxTicketCount = 4;
+    this.minTicketCount = 0;
+    this.totalTicketPrice = 0;
+    this.ui();
+}
 
-
-                let priceType = target.parentNode.parentNode.parentNode.querySelector(".product_amount").innerText;
-                let price = decidePrice(priceType);
-                let resultPrice = "" + nextValue * price;
-                resultPrice = resultPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                target.parentNode.parentNode.parentNode.querySelector(".total_price").innerText = resultPrice;
-                let color = target.parentNode.parentNode.parentNode.querySelector(".individual_price").className;
-
-                let test = target.parentNode.querySelector(".count_control_input");
-                if (test.value > 0) {
-                    target.parentNode.querySelector(".ico_minus3").className = "btn_plus_minus spr_book2 ico_minus3";
-                }
-
-                if (color.indexOf("on_color") === -1)
-                    target.parentNode.parentNode.parentNode.querySelector(".individual_price").className = "individual_price on_color"
-
-            } else if (target.title === "빼기") {
-                // 빼기로 발생되는 이벤트 실행
-                /*
-                    카운트값을 1증가 시키기
-                    금액 변화
-                    최종값이 0이 되면 disable class 추가하기
-                        금액 클래스 on_color 빼기
-                 */
-                let presentValue = Number(target.nextSibling.nextSibling.value);
-                if (presentValue > 0) {
-                    let nextValue = presentValue -= 1;
-                    target.nextSibling.nextSibling.value = nextValue;
-
-                    let html = document.querySelector("#tiketCount").innerHTML;
-                    html = html.replace("{count}", nextValue);
-                    target.nextSibling.nextSibling.value = nextValue;
-                    let parent = target.parentNode;
-                    let replaceNode = target.parentNode.children[1];
-                    let element = document.createElement("input");
-                    element.type = "tel";
-                    element.setAttribute("class", "count_control_input");
-                    element.setAttribute("value", nextValue);
-                    element.setAttribute("readonly", "");
-                    element.title = "수량";
-                    target.parentNode.replaceChild(element, replaceNode);
-
-                    let priceType = target.parentNode.parentNode.parentNode.querySelector(".product_amount").innerText;
-                    let price = decidePrice(priceType);
-                    let resultPrice = "" + nextValue * price;
-                    resultPrice = resultPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                    target.parentNode.parentNode.parentNode.querySelector(".total_price").innerText = resultPrice;
-
-                    let test = target.parentNode.querySelector(".count_control_input");
-                    if (Number(test.value) === 0) {
-                        target.parentNode.querySelector(".ico_minus3").className = "btn_plus_minus spr_book2 ico_minus3 disabled";
-                        target.parentNode.querySelector(".count_control_input").className = "count_control_input disabled";
-                        target.parentNode.parentNode.parentNode.querySelector(".individual_price").className = "individual_price"
-                    }
-
-
-                }
-
-
-            }
-            ableReservation();
+Ticket.prototype = {
+    increaseTicketCount: function () {
+        this.ticketCount = this.ticketCount + 1;
+        if (this.ticketCount > this.maxTicketCount)
+            return this.ticketCount = this.maxTicketCount;
+        else
+            return this.ticketCount;
+        return this.ticketCount += 1;
+    },
+    decreaseTicketCount: function () {
+        this.ticketCount = this.ticketCount - 1;
+        if (this.ticketCount < this.minTicketCount) {
+            return this.ticketCount = this.minTicketCount;
+        } else
+            return this.ticketCount;
+    },
+    ui: function () {
+        this.ticketElement.addEventListener("click", function (event) {
+            event.preventDefault();
+            const className = event.target.className;
+            if (this.isMinus(className))
+                this.countControl(this.decreaseTicketCount());
+            else if (this.isPlus(className))
+                this.countControl(this.increaseTicketCount());
+        }.bind(this));
+    },
+    isMinus: function (className) {
+        return className.indexOf("ico_minus3") !== -1;
+    },
+    isPlus: function (className) {
+        return className.indexOf("ico_plus3") !== -1;
+    },
+    getTicketCount: function () {
+        return this.ticketCount;
+    },
+    countControl: function () {
+        const minusButton = this.ticketElement.querySelector(".ico_minus3");
+        const input = this.ticketElement.querySelector(".count_control_input");
+        const plusButton = this.ticketElement.querySelector(".ico_plus3");
+        if (this.getTicketCount() > 0) {
+            minusButton.className = "btn_plus_minus spr_book2 ico_minus3";
+            input.className = "count_control_input";
+        } else if (this.getTicketCount() === 0) {
+            minusButton.className = "btn_plus_minus spr_book2 ico_minus3 disabled";
+            input.className = "count_control_input disabled";
         }
-        let ticketCountList = document.querySelectorAll(".count_control_input");
-        let totalCount = 0;
-        ticketCountList.forEach(Element => {
-            totalCount += Number(Element.value);
-        });
-        document.querySelector("#totalCount").innerText = totalCount;
-    });
-}());
-
-(function () {
-    document.querySelector("#name").addEventListener("change", function () {
-        let name = document.querySelector("#name").value;
-        if (name.value !== '')
-            nameValid = true;
-        else nameValid = false;
-        ableReservation();
-    });
-}());
-
-
-(function () {
-    document.querySelector("#tel").addEventListener("change", function () {
-        let tel = document.querySelector("#tel").value;
-        if (tel !== '')
-            telValid = true;
-        else telValid = false;
-        if (!telReg(tel)) {
-            telValid = telReg(tel);
-            alert("전화번호 양식이 틀렸습니다.\n ex) 010-0000-0000");
+        this.countControlTemplate();
+    },
+    countControlTemplate: function () {
+        const price = Number(this.ticketElement.querySelector(".price").innerText
+            .replace(",", ""));
+        this.ticketElement.querySelector(".count_control_input").value = this.getTicketCount();
+        let totalPrice = price * this.getTicketCount();
+        this.totalTicketPrice = totalPrice;
+        if (totalPrice > 0) {
+            totalPrice = totalPrice + "";
+            totalPrice = totalPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            this.ticketElement.querySelector(".total_price").innerText = totalPrice;
+            this.ticketElement.querySelector(".individual_price").className = "individual_price on_color";
+        } else if (totalPrice === 0) {
+            this.ticketElement.querySelector(".total_price").innerText = 0;
+            this.ticketElement.querySelector(".individual_price").className = "individual_price";
         }
-        ableReservation()
-    });
-}());
-
-(function () {
-    document.querySelector("#email").addEventListener("change", function () {
-        let email = document.querySelector("#email").value;
-        if (email != '')
-            emailValid = true
-        else emailValid = false;
-        if (!emailReg(email)) {
-            emailValid = emailReg(tel);
-            alert("email 양식이 틀렸습니다.\n ex) id@domain.com");
-        }
-        ableReservation();
-    });
-}());
-
-(function () {
-    document.querySelector(".section_booking_agreement").addEventListener("click", function () {
-        event.preventDefault();
-        let target = event.target;
-        if (target.innerText === "보기") {
-            let agreement = target.parentNode.parentNode;
-            agreement.className = "agreement open";
-            agreement.querySelector(".btn_text").innerText = "접기";
-        } else if (target.innerText === "접기") {
-            let agreement = target.parentNode.parentNode;
-            agreement.className = "agreement";
-            agreement.querySelector(".btn_text").innerText = "보기";
-        }
-
-        if (target.className.indexOf("chk_txt_label") !== -1) {
-            let checkbox = target.parentNode.querySelector("#chk3");
-            if (checkbox.checked)
-                checkbox.removeAttribute("checked");
-            else {
-                checkbox.setAttribute("checked", '');
-            }
-            ableReservation();
-        }
-
-    });
-}());
-
-function decidePrice(type) {
-    switch (type) {
-        case '성인':
-            return 10200;
-        case '유아':
-            return 6800;
-        case '세트1':
-            return 20000;
-        case '청소년':
-            return 8500;
-
+        document.querySelector("#totalCount").innerText = adultTicket.getTicketCount() + babyTicket.getTicketCount() +
+            youngTicket.getTicketCount() + setOneTicket.getTicketCount();
+    },
+    getTotalTicketPrice: function () {
+        return this.totalTicketPrice;
     }
 }
 
-function telReg(tel) {
-    if (tel.match(/(\d{3})-(\d{3,4})-(\d{4})/))
-        return true;
-    return false;
+const ticketElement = document.querySelectorAll(".qty");
+const adultTicket = new Ticket(ticketElement[0]);
+const babyTicket = new Ticket(ticketElement[1]);
+const youngTicket = new Ticket(ticketElement[2]);
+const setOneTicket = new Ticket(ticketElement[3]);
+
+// #3 예매자정보UI
+function Valid(inputElement) {
+    this.reserveValue = "";
+    this.inputElment = inputElement;
+    this.check();
 }
 
-function emailReg(email) {
-    if (email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
-        return true;
-    return false;
+Valid.prototype = {
+    check: function () {
+        const input = this.inputElment.querySelector("input");
+        input.addEventListener("change", function () {
+            const flag = this.inputElment.querySelector(".input_name").innerText;
+            this.validCheck(flag, input.value);
+        }.bind(this));
+    },
+    validCheck: function (flag, inputValue) {
+        switch (flag) {
+            case '예매자':
+                // if (!this.nameValidCheck(inputValue)) {
+                //     this.inputElment.querySelector("#name").value = "";
+                //     this.inputElment.querySelector("#name").value = "이름이 너무 길거나 특스문자가 입력되어 있습니다.";
+                //
+                // }
+                this.reserveValue = inputValue;
+                break;
+            case '연락처':
+                if (!this.telNumberValidCheck(inputValue)) {
+                    // this.inputElment.querySelector("#tel").value = "";
+                    this.inputElment.querySelector("#tel").value = "전화번호 양식이 일치하지 않습니다. 예)010-1234-1234";
+                } else
+                    this.reserveValue = inputValue;
+                break;
+            case '이메일':
+                if (!this.emailValidCheck(inputValue)) {
+                    // this.inputElment.querySelector("#email"). = "";
+                    this.inputElment.querySelector("#email").value = "email 양식이 일치하지 않습니다. 예)seunghwan@naver.com";
+                } else
+                    this.reserveValue = inputValue;
+                break;
+        }
+    },
+    nameValidCheck(inputValue) {
+        return inputValue.length > 10;
+    },
+    telNumberValidCheck(inputValue) {
+        return inputValue.match(/(\d{3})-(\d{3,4})-(\d{4})/);
+    },
+    emailValidCheck(inputValue) {
+        return inputValue.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    },
+    getReserveValue: function () {
+        return this.reserveValue;
+    }
 }
 
-function ableReservation() {
-    let totalCount = Number(document.querySelector("#totalCount").innerText);
-    let checkbox = document.querySelector("#chk3");
-    if ((totalCount > 0) && nameValid && emailValid && telValid && checkbox.checked)
-        document.querySelector(".bk_btn_wrap").className = "bk_btn_wrap";
-    else
-        document.querySelector(".bk_btn_wrap").className = "bk_btn_wrap disable";
+const inputFormElements = document.querySelectorAll(".inline_form");
+const reservationNameForm = new Valid(inputFormElements[0]);
+const reservationTelNumberForm = new Valid(inputFormElements[1]);
+const reservationEmailForm = new Valid(inputFormElements[2]);
 
+// #4 약관UI
+function Agreement(agreementElement) {
+    this.element = agreementElement;
+    this.show();
 }
+
+Agreement.prototype = {
+    show: function () {
+        this.element.querySelector(".btn_agreement").addEventListener("click", function (event) {
+            event.preventDefault();
+            const text = this.element.querySelector(".btn_text");
+            if (text.innerText === "보기") {
+                this.element.className = "agreement open";
+                text.innerText = "접기";
+            } else if (text.innerText === "접기") {
+                this.element.className = "agreement";
+                text.innerText = "보기";
+            }
+        }.bind(this));
+    }
+}
+const checkBoxes = document.querySelectorAll(".agreement");
+const agreement1 = new Agreement(checkBoxes[1]);
+const agreement2 = new Agreement(checkBoxes[2]);
+
+// #5 버튼
+function Submit(element) {
+    this.element = element;
+    this.submitCheck();
+    this.submit();
+}
+
+Submit.prototype = {
+    submitCheck: function () {
+        const input = document.querySelector("#chk3");
+        input.addEventListener("change", function () {
+            if (input.checked)
+                this.element.className = "bk_btn_wrap";
+            else
+                this.element.className = "bk_btn_wrap disable";
+        }.bind(this));
+    },
+    submit: function () {
+        this.element.addEventListener("click", function (event) {
+            event.preventDefault();
+            const ticketData = {};
+            ticketData.adultTicketCount = adultTicket.getTicketCount();
+            ticketData.babyTicketCount = babyTicket.getTicketCount();
+            ticketData.youngTicketCount = youngTicket.getTicketCount();
+            ticketData.setTicketCount = setOneTicket.getTicketCount();
+            ticketData.totalTicketCount = Number(document.querySelector("#totalCount").innerText);
+            ticketData.totalTicketPrice = adultTicket.getTotalTicketPrice() + babyTicket.getTotalTicketPrice()
+                + youngTicket.getTotalTicketPrice() + setOneTicket.getTotalTicketPrice();
+            ticketData.reservationName = reservationNameForm.getReserveValue();
+            ticketData.reservationTelNumber = reservationTelNumberForm.getReserveValue();
+            ticketData.reservationEmail = reservationEmailForm.getReserveValue();
+            console.table(ticketData);
+        }.bind(this));
+    }
+}
+const submitButton = new Submit(document.querySelector(".bk_btn_wrap"));
