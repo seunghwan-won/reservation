@@ -1,83 +1,8 @@
-(function () {
-    document.querySelector(".rating").addEventListener("click", function () {
-        let score = event.target.value;
-        if (score !== undefined) {
-            score = Number(score);
-            init();
-            document.querySelectorAll(".rating_rdo").forEach(Element => {
-                if (Number(Element.value) <= score)
-                    Element.className = "rating_rdo checked";
-            });
-            let rank = document.querySelector(".star_rank");
-            rank.className = "star_rank";
-            rank.innerText = score;
-        }
-    });
-}());
-
-function init() {
-    document.querySelectorAll(".rating_rdo").forEach(Element => {
-        Element.className = "rating_rdo";
-    });
+function getByteLength(s, b, i, c) {
+    // for (bit = index = 0; content.charCodeAt(index++); bit += count >> 11 ? 3 : count >> 7 ? 2 : 1);
+    for (b = i = 0; c = s.charCodeAt(i++); b += (c == 10) ? 2 : ((c >> 7) ? 2 : 1)) ;
+    document.querySelector(".guide_review").innerHTML = "<span>" + b + "</span>/400<span>(최소5자이상)</span>"
 }
-
-(function () {
-    document.querySelector(".review_contents").addEventListener("click", function () {
-        document.querySelector(".review_write_info").style.display = "none";
-        document.querySelector(".review_textarea").focus();
-    });
-}());
-
-(function () {
-    document.querySelector(".review_textarea").addEventListener("keyup", countCharacters);
-
-}());
-(function () {
-    document.querySelector(".review_textarea").addEventListener("focusout", myFocusFunction);
-}());
-
-function countCharacters() {
-    var textEntered, countRemaining, counter;
-    textEntered = document.querySelector(".review_textarea").value;
-    var li_str_len = textEntered.length;
-    var li_byte = 0;
-    var li_len = 0;
-    var ls_one_char = "";
-
-    for (var i = 0; i < li_str_len; i++) {
-        ls_one_char = textEntered.charAt(i);
-        if (escape(ls_one_char).length > 4) {
-            li_byte += 2;
-        } else
-            li_byte += 1;
-
-        if (li_byte <= 400) {
-            li_len = i + 1;
-        }
-    }
-    document.querySelector(".guide_review").innerHTML = "<span>" + li_byte + "</span>/400<span>(최소5자이상)</span>"
-
-}
-
-function myFocusFunction() {
-    var text = document.querySelector(".review_textarea").value;
-    if (text === "") {
-        document.querySelector(".review_write_info").style.display = "";
-    }
-}
-
-
-(function () {
-    const elImage = document.querySelector("#reviewImageFileOpenInput");
-    elImage.addEventListener("change", (event) => {
-        if (event.target.files.length > 1)
-            return;
-        const image = event.target.files[0];
-        const elImage = document.querySelector(".item_thumb");
-        elImage.src = window.URL.createObjectURL(image);
-        document.querySelector(".item").style.display = "block";
-    });
-}());
 
 function validImageType(image) {
     const result = ([
@@ -86,38 +11,132 @@ function validImageType(image) {
     return result;
 }
 
-(function () {
-    let deleteButton = document.querySelector(".ico_del");
-    deleteButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        event.target.parentNode.parentNode
-    });
-}());
-
-// (function () {
-//     document.querySelector(".bk_btn").addEventListener("click", function () {
-//         let reviewImage = document.querySelector("#reviewImageFileOpenInput").files[0];
-//         var formData = new FormData();
-//         formData.append("reviewImage", reviewImage, true);
-//         var ui = new XMLHttpRequest();
-//         ui.open("POST", "/review/upload");
-//         ui.setRequestHeader("content-type", "multipart/form-data");
-//         console.log(formData)
-//         ui.send(formData);
-//     });
-// }());
-
-var sendButton = document.querySelector(".box_bk_btn");
-sendButton.addEventListener("click", sendReview);
 function sendReview() {
     let reviewImage = document.querySelector("#reviewImageFileOpenInput").files[0];
-    console.log(reviewImage);
-    var filedata = new FormData(); // FormData 인스턴스 생성
-    filedata.append('reviewImage', reviewImage);
-    console.log(filedata);
 
-    var _xml = new XMLHttpRequest();
-    _xml.open('POST', '/review/upload', true);
-    // _xml.setRequestHeader("Content-Type", "multipart/form-data");
-    _xml.send(filedata);
+    const data = new FormData();
+    data.append('reviewImage', reviewImage);
+
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            window.location.href = 'http://localhost:8080/myreservation';
+        }
+    });
+
+    xhr.open('POST', 'http://localhost:8080/review/upload');
+    xhr.send(data);
 }
+
+function Rating(element) {
+    this.element = element;
+    this.currentScore = 0;
+    this.getScore();
+}
+
+Rating.prototype = {
+    getScore() {
+        this.element.addEventListener("click", function (event) {
+            const score = Number(event.target.value);
+            if ((score >= 0) && (score <= 5)) {
+                this.currentScore = score;
+                this.test();
+                this.star();
+                this.score();
+            }
+        }.bind(this));
+    },
+    test() {
+        this.element.querySelectorAll(".rating_rdo").forEach(element => {
+            if (Number(element.value) <= this.currentScore)
+                element.checked = "checked";
+            else if (Number(element.value) > this.currentScore)
+                element.checked = "";
+        });
+    },
+    star() {
+        const rank = this.element.querySelector(".star_rank");
+        if (this.currentScore !== 0) {
+            rank.className = "star_rank";
+        } else {
+            rank.className = "star_rank gray_star";
+        }
+    },
+    score() {
+        this.element.querySelector(".star_rank").innerText = this.currentScore;
+    }
+}
+
+const rate = new Rating(document.querySelector(".rating"));
+
+function Write(element) {
+    this.element = element;
+    this.focusEvent();
+    this.blurEvent();
+    this.typing();
+}
+
+Write.prototype = {
+    focusEvent() {
+        this.element.addEventListener("click", function (event) {
+            this.element.querySelector(".review_write_info").style.display = "none";
+            this.element.querySelector(".review_textarea").focus();
+        }.bind(this));
+    },
+    blurEvent() {
+        this.element.querySelector(".review_textarea").addEventListener("blur", function () {
+            const text = document.querySelector(".review_textarea").value;
+            if (text === "") {
+                document.querySelector(".review_write_info").style.display = "";
+            }
+        }.bind(this));
+    },
+    typing() {
+        this.element.querySelector(".review_textarea").addEventListener("keyup", function () {
+            getByteLength(this.element.querySelector(".review_textarea").value);
+        }.bind(this));
+    }
+}
+
+const reviewWrite = new Write(document.querySelector(".review_contents"));
+
+function FileThumbnail(element) {
+    this.element = element;
+    this.createThumbnail();
+}
+
+FileThumbnail.prototype = {
+    createThumbnail: function () {
+        this.element.addEventListener("change", function (event) {
+            if (event.target.files.length > 1)
+                return;
+            let image = 0;
+            if (validImageType(event.target.files[0]))
+                image = event.target.files[0];
+            const elImage = document.querySelector(".item_thumb");
+            elImage.src = window.URL.createObjectURL(image);
+            document.querySelector(".item").style.display = "block";
+        }.bind(this));
+    }
+}
+
+const thumbnail = new FileThumbnail(document.querySelector("#reviewImageFileOpenInput"));
+
+function SendReview(element) {
+    this.element = element;
+    this.count;
+    this.image;
+    this.send();
+}
+
+SendReview.prototype = {
+    send: function () {
+        this.element.addEventListener("click", function () {
+            sendReview();
+        }.bind(this));
+    }
+}
+
+const button = new SendReview(document.querySelector(".box_bk_btn"));

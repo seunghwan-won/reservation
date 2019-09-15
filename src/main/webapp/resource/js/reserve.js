@@ -1,16 +1,13 @@
-let data;
-let nameValid;
-let telValid;
-let emailValid;
 // 예약 데이터 불러오기
 (function () {
-    const url = new URLSearchParams(document.location.href);
-    // const displayInfoId = url.get("http://127.0.0.1:8080/reservation?id");
-    const displayInfoId = url.get("reservation?id");
-    let ajax = new XMLHttpRequest();
+    let id = window.location.search;
+    id = id.split("=");
+    const displayInfoId = id[1];
+    const ajax = new XMLHttpRequest();
+    let data;
     ajax.addEventListener("load", function () {
         data = JSON.parse(this.response);
-    })
+    });
     ajax.open("GET", "/api/reservation/" + displayInfoId, true);
     ajax.send();
 }());
@@ -226,8 +223,61 @@ Submit.prototype = {
             ticketData.reservationName = reservationNameForm.getReserveValue();
             ticketData.reservationTelNumber = reservationTelNumberForm.getReserveValue();
             ticketData.reservationEmail = reservationEmailForm.getReserveValue();
-            console.table(ticketData);
+            let id = window.location.search;
+            id = id.split("=");
+            let reserveDate = document.querySelector(".inline_txt").innerText;
+            reserveDate = reserveDate.split(".");
+            reserveDate = reserveDate[0]+"."+reserveDate[1]+ "."+reserveDate[2].split(",")[0];
+            console.log(reserveDate);
+            const data = JSON.stringify({
+                "displayInfoId": id[1],
+                "prices": [
+                    {
+                        "count": 1,
+                        "productPriceId": 1,
+                        "reservationInfoId": 8,
+                        "reservationInfoPriceId": 1
+                    },
+                    {
+                        "count": 2,
+                        "productPriceId": 1,
+                        "reservationInfoId": 8,
+                        "reservationInfoPriceId": 1
+                    }
+                ],
+                "productId": 1,
+                "reservationEmail": reservationEmailForm.getReserveValue(),
+                "reservationName": reservationNameForm.getReserveValue(),
+                "reservationTelephone": reservationTelNumberForm.getReserveValue(),
+                "reservationYearMonthDay": reserveDate
+            });
+
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
+                }
+            });
+
+            xhr.open("POST", "http://localhost:8080/api/myReservation");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(data);
         }.bind(this));
+    },
+    sendData(data) {
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+            }
+        });
+        xhr.open('POST', 'api/myReservation');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.send(data);
     }
 }
 const submitButton = new Submit(document.querySelector(".bk_btn_wrap"));

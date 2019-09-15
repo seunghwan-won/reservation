@@ -10,10 +10,11 @@ import seunghwan.won.dto.ReservationInfo;
 import seunghwan.won.dto.ReservationInfoPrice;
 import seunghwan.won.service.ReservationService;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,17 +55,14 @@ public class ReservationServiceImplement implements ReservationService {
         reservationInfo.setReservationName(data.getReservationName());
         reservationInfo.setReservationTel(data.getReservationTel());
         reservationInfo.setReservationDate(data.getReservationYearMonthDay());
-        try {
-            reservationInfo.setCreateDate(transFormat.parse(data.getReservationYearMonthDay()));
-            reservationInfo.setModifyDate(transFormat.parse(data.getReservationYearMonthDay()));
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        LocalDateTime localDateTime = LocalDateTime.now();
+        reservationInfo.setCreateDate(Date.valueOf
+                (LocalDate.of(localDateTime.getYear(), localDateTime.getMonthValue(), localDateTime.getDayOfMonth())));
+        reservationInfo.setModifyDate(Date.valueOf
+                (LocalDate.of(localDateTime.getYear(), localDateTime.getMonthValue(), localDateTime.getDayOfMonth())));
         int reservationInfoId = reservationInfoDao.insert(reservationInfo);
         for(ReservationInfoPrice reservationInfoPrice : reservationInfoPrices){
             reservationInfoPrice.setReservationInfoId(reservationInfoId);
-            System.out.println(reservationInfoPrice);
             reservationInfoPriceDao.insertReservationInfoPrice(reservationInfoPrice);
         }
         return reservationInfoId;

@@ -1,4 +1,4 @@
-package seunghwan.won.controller;
+package seunghwan.won.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class ApiMyReservationContorller {
         session.setAttribute("userEmail", email);
         return reservationService.getReservations(email);
     }
-
+    @CrossOrigin(origins = "http://127.0.0.1:8080")
     @PostMapping()
     public int insertReservation(@RequestBody Data data) {
         System.out.println(data);
