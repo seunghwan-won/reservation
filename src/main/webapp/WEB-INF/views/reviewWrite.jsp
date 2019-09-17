@@ -123,5 +123,6 @@
         <span class="copyright">© NAVER Corp.</span>
     </div>
 </footer>
+<script src="/resource/js/reviewWrite.js"></script>
 </body>
 </html>

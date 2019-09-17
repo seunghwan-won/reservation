@@ -10,10 +10,12 @@ public class ReservationInfo {
     private String reservationName;
     private String reservationTel;
     private String reservationEmail;
-    private Date reservationDatel;
+    private String reservationDate;
     private int cancelFlag;
     private Date createDate;
     private Date modifyDate;
+    private CategoryJoinProductJoinDisplayInfo displayInfo;
+    private int totalPrice;
 
     public int getId() {
         return id;
@@ -63,12 +65,12 @@ public class ReservationInfo {
         this.reservationEmail = reservationEmail;
     }
 
-    public Date getReservationDatel() {
-        return reservationDatel;
+    public String getReservationDate() {
+        return reservationDate;
     }
 
-    public void setReservationDatel(Date reservationDatel) {
-        this.reservationDatel = reservationDatel;
+    public void setReservationDate(String reservationDate) {
+        this.reservationDate = reservationDate;
     }
 
     public int getCancelFlag() {
@@ -104,7 +106,7 @@ public class ReservationInfo {
                 ", reservationName='" + reservationName + '\'' +
                 ", reservationTel='" + reservationTel + '\'' +
                 ", reservationEmail='" + reservationEmail + '\'' +
-                ", reservationDatel=" + reservationDatel +
+                ", reservationDate=" + reservationDate +
                 ", cancelFlag=" + cancelFlag +
                 ", createDate=" + createDate +
                 ", modifyDate=" + modifyDate +
@@ -123,13 +125,29 @@ public class ReservationInfo {
                 Objects.equals(reservationName, that.reservationName) &&
                 Objects.equals(reservationTel, that.reservationTel) &&
                 Objects.equals(reservationEmail, that.reservationEmail) &&
-                Objects.equals(reservationDatel, that.reservationDatel) &&
+                Objects.equals(reservationDate, that.reservationDate) &&
                 Objects.equals(createDate, that.createDate) &&
                 Objects.equals(modifyDate, that.modifyDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, productId, displayInfoId, reservationName, reservationTel, reservationEmail, reservationDatel, cancelFlag, createDate, modifyDate);
+        return Objects.hash(id, productId, displayInfoId, reservationName, reservationTel, reservationEmail, reservationDate, cancelFlag, createDate, modifyDate);
+    }
+
+    public void setDisplayInfo(CategoryJoinProductJoinDisplayInfo displayInfo) {
+        this.displayInfo = displayInfo;
+    }
+
+    public CategoryJoinProductJoinDisplayInfo getDisplayInfo() {
+        return displayInfo;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
     }
 }

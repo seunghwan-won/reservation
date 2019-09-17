@@ -19,6 +19,10 @@ public class DetailController {
     @GetMapping()
     public String detailPage(@RequestParam(name = "id", required = true) int productId, Model model) {
         Map<String, Object> result = detailService.getDetail(productId);
+        System.out.println(result.get("productImages"));
+        System.out.println(result.get("displayInfo"));
+        System.out.println(result.get("averageScore"));
+        System.out.println(result.get("comments"));
         model.addAttribute("productImageList", result.get("productImages"));
         model.addAttribute("displayInfo", result.get("displayInfo"));
         model.addAttribute("averageScore", result.get("averageScore"));
