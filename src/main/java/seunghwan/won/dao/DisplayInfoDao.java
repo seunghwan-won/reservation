@@ -1,11 +1,11 @@
 package seunghwan.won.dao;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import seunghwan.won.dto.*;
+import seunghwan.won.dto.json.DisplayInfo;
 
 import javax.sql.DataSource;
 import java.util.Collections;
@@ -17,7 +17,7 @@ import static seunghwan.won.dao.sqls.DisplayInfoDaoSqls.*;
 public class DisplayInfoDao {
     private NamedParameterJdbcTemplate jdbcTemplate;
     private RowMapper<?> rowMapper;
-    private RowMapper<?> categoryJoinProductJoinDisplayInfoMapper;
+//    private RowMapper<?> categoryJoinProductJoinDisplayInfoMapper;
     private RowMapper<?> displayInfoJoinProductJoinProductImageJoinFileInfoMapper;
     private RowMapper<?> displayInfoJoinDisplayInfoImageJoinFileInfoMapper;
     private RowMapper<?> displayInfoJoinProductJoinReservationUserCommentJoinReservationInfoJoinReservationCommentImageJoinFileInfoMapper;
@@ -28,19 +28,19 @@ public class DisplayInfoDao {
 
     public DisplayInfoDao(DataSource dataSource) {
         this.jdbcTemplate = DaoUtil.getJdbcTemplate(dataSource);
-        this.rowMapper = DaoUtil.getRowMapper(DisplayInfo.class);
+        this.rowMapper = DaoUtil.getRowMapper(seunghwan.won.dto.DisplayInfo.class);
         this.insert = DaoUtil.getInsert(dataSource, TABLE_NAME);
     }
 
-    public int insertDisplayInfo(DisplayInfo displayInfo) {
+    public int insertDisplayInfo(seunghwan.won.dto.DisplayInfo displayInfo) {
         return DaoUtil.insert(displayInfo, insert);
     }
 
-    public DisplayInfo selectDisplayInfoById(int id) {
-        return (DisplayInfo) DaoUtil.select(jdbcTemplate, SELECT_BY_ID, id, rowMapper);
+    public seunghwan.won.dto.DisplayInfo selectDisplayInfoById(int id) {
+        return (seunghwan.won.dto.DisplayInfo) DaoUtil.select(jdbcTemplate, SELECT_BY_ID, id, rowMapper);
     }
 
-    public int updateDisplayInfo(DisplayInfo displayInfo) {
+    public int updateDisplayInfo(seunghwan.won.dto.DisplayInfo displayInfo) {
         return DaoUtil.update(jdbcTemplate, UPDATE_BY_ID, displayInfo);
     }
 
@@ -48,11 +48,20 @@ public class DisplayInfoDao {
         return DaoUtil.delete(jdbcTemplate, DELETE_BY_ID, id);
     }
 
-    public CategoryJoinProductJoinDisplayInfo getData(int displayInfoId) {
-        this.categoryJoinProductJoinDisplayInfoMapper = DaoUtil.getRowMapper(CategoryJoinProductJoinDisplayInfo.class);
-        return (CategoryJoinProductJoinDisplayInfo) jdbcTemplate.queryForObject(SELECT_DISPLAY_INFO,
+//    public CategoryJoinProductJoinDisplayInfo getData(int displayInfoId) {
+//        this.categoryJoinProductJoinDisplayInfoMapper = DaoUtil.getRowMapper(CategoryJoinProductJoinDisplayInfo.class);
+//        return (CategoryJoinProductJoinDisplayInfo) jdbcTemplate.queryForObject(SELECT_DISPLAY_INFO,
+//                Collections.singletonMap(DaoUtil.ID, displayInfoId),
+//                categoryJoinProductJoinDisplayInfoMapper);
+//    }
+
+    public seunghwan.won.dto.json.DisplayInfo getData(long displayInfoId) {
+        RowMapper<?> rowMapper =
+                DaoUtil.getRowMapper(DisplayInfo.class);
+//        this.categoryJoinProductJoinDisplayInfoMapper = DaoUtil.getRowMapper(seunghwan.won.dto.json.DisplayInfo.class);
+        return (DisplayInfo) jdbcTemplate.queryForObject(SELECT_DISPLAY_INFO,
                 Collections.singletonMap(DaoUtil.ID, displayInfoId),
-                categoryJoinProductJoinDisplayInfoMapper);
+                rowMapper);
     }
 
     public List<DisplayInfoJoinProductJoinProductImageJoinFile> getProductImages(int displayInfoId) {
@@ -94,7 +103,7 @@ public class DisplayInfoDao {
         this.reservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfoMapper =
                 DaoUtil.getRowMapper(ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo.class);
         return (List<ReservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfo>)
-                jdbcTemplate.query(SELECT_COMMENT_IMAGE,Collections.singletonMap(DaoUtil.ID, displayInfoId),
+                jdbcTemplate.query(SELECT_COMMENT_IMAGE, Collections.singletonMap(DaoUtil.ID, displayInfoId),
                         reservationUserCommentImageJoinReservationInfoJoinReservationUserCommentJoinFileInfoMapper);
     }
 }

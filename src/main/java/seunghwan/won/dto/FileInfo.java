@@ -7,7 +7,7 @@ public class FileInfo {
     private int id;
     private String fileName;
     private String saveFileName;
-    private String contextType;
+    private String contentType;
     private int deleteFlag;
     private Date createDate;
     private Date modifyDate;
@@ -36,12 +36,12 @@ public class FileInfo {
         this.saveFileName = saveFileName;
     }
 
-    public String getContextType() {
-        return contextType;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setContextType(String contextType) {
-        this.contextType = contextType;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     public int getDeleteFlag() {
@@ -74,7 +74,7 @@ public class FileInfo {
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
                 ", saveFileName='" + saveFileName + '\'' +
-                ", contextType='" + contextType + '\'' +
+                ", contentType='" + contentType + '\'' +
                 ", deleteFlag=" + deleteFlag +
                 ", createDate=" + createDate +
                 ", modifyDate=" + modifyDate +
@@ -90,13 +90,13 @@ public class FileInfo {
                 deleteFlag == fileInfo.deleteFlag &&
                 Objects.equals(fileName, fileInfo.fileName) &&
                 Objects.equals(saveFileName, fileInfo.saveFileName) &&
-                Objects.equals(contextType, fileInfo.contextType) &&
+                Objects.equals(contentType, fileInfo.contentType) &&
                 Objects.equals(createDate, fileInfo.createDate) &&
                 Objects.equals(modifyDate, fileInfo.modifyDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fileName, saveFileName, contextType, deleteFlag, createDate, modifyDate);
+        return Objects.hash(id, fileName, saveFileName, contentType, deleteFlag, createDate, modifyDate);
     }
 }

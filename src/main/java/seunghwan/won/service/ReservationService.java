@@ -2,11 +2,12 @@ package seunghwan.won.service;
 
 import seunghwan.won.dto.Data;
 import seunghwan.won.dto.ReservationInfo;
+import seunghwan.won.dto.json.JsonReservationInfo;
 
 import java.util.Map;
 
 public interface ReservationService {
-    Map<String, Object> getReservations(String email);
+    JsonReservationInfo getReservations(String email);
 
     int insert(Data data);
 

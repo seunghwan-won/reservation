@@ -114,7 +114,3 @@ function presentProductCount(node) {
     });
     return count;
 }
-
-function tabUI() {
-
-}

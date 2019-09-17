@@ -6,4 +6,6 @@ public interface ImageService {
     byte[] getMapImage(int displayInfoId, HttpServletRequest request);
 
     byte[] getDisplayImage(int displayInfoId, HttpServletRequest request);
+
+    byte[] getCommentThumbnailImage(int commentImageId, HttpServletRequest request);
 }

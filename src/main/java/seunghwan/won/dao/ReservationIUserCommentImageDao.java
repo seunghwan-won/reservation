@@ -8,8 +8,9 @@ import seunghwan.won.dto.ReservationUserCommentImage;
 
 import javax.sql.DataSource;
 
-import static seunghwan.won.dao.sqls.ReservationUserCommentImageDaoSqls.DELETE_BY_ID;
-import static seunghwan.won.dao.sqls.ReservationUserCommentImageDaoSqls.SELECT_BY_ID;
+import java.util.Collections;
+
+import static seunghwan.won.dao.sqls.ReservationUserCommentImageDaoSqls.*;
 
 @Repository
 public class ReservationIUserCommentImageDao {
@@ -35,5 +36,9 @@ public class ReservationIUserCommentImageDao {
 
     public int deleteReservationUserCommentImageById(int id) {
         return DaoUtil.delete(jdbcTemplate, DELETE_BY_ID, id);
+    }
+
+    public String getCommentThumbnailImagePath(int commentImageId) {
+        return jdbcTemplate.queryForObject(SELECT_COMMENT_THUMBNAIL_IMAGE_BY_COMMENT_ID, Collections.singletonMap("id", commentImageId), String.class);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import seunghwan.won.dto.ReservationInfo;
+import seunghwan.won.dto.json.Reservation;
 
 import javax.sql.DataSource;
 import java.util.Collections;
@@ -25,11 +26,15 @@ public class ReservationInfoDao {
         this.insert = DaoUtil.getInsert(dataSource, TABLE_NAME);
     }
 
-    public List<ReservationInfo> getReservationInfo(String email) {
-        return (List<ReservationInfo>) jdbcTemplate.query(SELECT_ALL_BY_EMAIL, Collections.singletonMap("email", email), rowMapper);
+    //    public List<ReservationInfo> getReservationInfo(String email) {
+//        return (List<ReservationInfo>) jdbcTemplate.query(SELECT_ALL_BY_EMAIL, Collections.singletonMap("email", email), rowMapper);
+//    }
+    public List<Reservation> getReservationInfo(String email) {
+        RowMapper<?> rowMapper =  DaoUtil.getRowMapper(Reservation.class);
+        return (List<Reservation>) jdbcTemplate.query(SELECT_ALL_BY_EMAIL, Collections.singletonMap("email", email), rowMapper);
     }
 
-    public int calculatePrice(int id) {
+    public int calculatePrice(long id) {
         return jdbcTemplate.queryForObject(CALC_PRICE_BY_ID, Collections.singletonMap("id", id), Integer.class);
     }
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import seunghwan.won.dto.Data;
 import seunghwan.won.dto.ReservationInfo;
+import seunghwan.won.dto.json.JsonReservationInfo;
 import seunghwan.won.service.ReservationService;
 
 import javax.servlet.http.HttpSession;
@@ -17,7 +18,7 @@ public class ApiMyReservationContorller {
 
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping()
-    public Map<String, Object> myReservation(@RequestParam(name = "resrv_email", required = true) String email, HttpSession session) {
+    public JsonReservationInfo myReservation(@RequestParam(name = "resrv_email", required = true) String email, HttpSession session) {
         session.setAttribute("userEmail", email);
         return reservationService.getReservations(email);
     }

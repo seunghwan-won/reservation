@@ -25,4 +25,11 @@ public class ApiImageController {
     byte[] displayImage(@RequestParam(name = "id", required = true) int displayInfoId, HttpServletRequest request) {
         return imageService.getDisplayImage(displayInfoId, request);
     }
+
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
+        @GetMapping(path = "commentThumbnail", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody
+    byte[] commentThumbnailImage(@RequestParam(name = "id", required = true) int commentImageId, HttpServletRequest request) {
+        return imageService.getCommentThumbnailImage(commentImageId, request);
+    }
 }

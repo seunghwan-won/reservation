@@ -9,7 +9,16 @@ public class DisplayInfoDaoSqls {
 
     public static final String DELETE_BY_ID = "delete from display_info where id=:id";
 
-    public static final String SELECT_DISPLAY_INFO = "select p.id as productId, c.id as categoryId, d.id as displayInfoId, " +
+//    public static final String SELECT_DISPLAY_INFO = "select p.id as productId, c.id as categoryId, d.id as displayInfoId, " +
+//            "c.name as categoryName, p.description as productDescription, p.content as productContent, " +
+//            "p.event as productEvent, d.opening_hours as openingHours, d.place_name as placeName, d.place_lot as placeLot, " +
+//            "d.place_street as placeStreet, d.tel as telephone, d.homepage as homepage, d.email as email, " +
+//            "d.create_date as createDate, d.modify_date as modifyDate  " +
+//            "from category c " +
+//            "inner join product p on c.id = p.category_id " +
+//            "inner join display_info d on p.id = d.product_id where d.id = :id";
+
+    public static final String SELECT_DISPLAY_INFO = "select p.id as productID, c.id as categoryID, d.id as displayInfoID, " +
             "c.name as categoryName, p.description as productDescription, p.content as productContent, " +
             "p.event as productEvent, d.opening_hours as openingHours, d.place_name as placeName, d.place_lot as placeLot, " +
             "d.place_street as placeStreet, d.tel as telephone, d.homepage as homepage, d.email as email, " +
@@ -17,6 +26,7 @@ public class DisplayInfoDaoSqls {
             "from category c " +
             "inner join product p on c.id = p.category_id " +
             "inner join display_info d on p.id = d.product_id where d.id = :id";
+
     public static final String SELECT_PRODUCT_IMAGE = "SELECT pi.product_id as productId, pi.id as productImageId, " +
             "pi.type as type, f.id as fileInfoId,\n" +
             "f.file_name as fileName, f.save_file_name as saveFileName, f.content_type as contentType,\n" +

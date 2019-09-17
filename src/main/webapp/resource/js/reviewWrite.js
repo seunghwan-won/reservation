@@ -13,20 +13,35 @@ function validImageType(image) {
 
 function sendReview() {
     let reviewImage = document.querySelector("#reviewImageFileOpenInput").files[0];
+    var urlAdd = decodeURIComponent(location.href);
+    // url이 encodeURIComponent 로 인코딩 되었을때는 다시 디코딩 해준다.
+    urlAdd = decodeURIComponent(urlAdd);
+    const test = urlAdd.split("/");
+    console.log(urlAdd);
+    console.log(test
 
+
+        .length);
+    test.forEach(Element => {
+        console.log(Element);
+    });
     const data = new FormData();
     data.append('reviewImage', reviewImage);
 
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-
+    const productId = Number(test[5]);
+    const reservationInfoId = Number(test[4]);
+    const score = Number(document.querySelector(".star_rank").innerText);
+    const comment = document.querySelector(".review_textarea").value;
+    let url = "http://localhost:8080/review/upload?" + "comment=" + comment + "&productId=" + productId + "&score=" + score + "&reservationInfoId=" + reservationInfoId;
     xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-            window.location.href = 'http://localhost:8080/myreservation';
-        }
+        // if (this.readyState === 4) {
+        //     window.location.href = 'http://localhost:8080/myReservation';
+        // }
     });
 
-    xhr.open('POST', 'http://localhost:8080/review/upload');
+    xhr.open('POST', url);
     xhr.send(data);
 }
 

@@ -5,7 +5,7 @@ import java.util.Objects;
 public class ReservationUserCommentImage {
     private int id;
     private int reservationInfoId;
-    private int reservationInfoCommentId;
+    private int reservationUserCommentId;
     private int fileId;
 
     public int getId() {
@@ -24,12 +24,12 @@ public class ReservationUserCommentImage {
         this.reservationInfoId = reservationInfoId;
     }
 
-    public int getReservationInfoCommentId() {
-        return reservationInfoCommentId;
+    public int getReservationUserCommentId() {
+        return reservationUserCommentId;
     }
 
-    public void setReservationInfoCommentId(int reservationInfoCommentId) {
-        this.reservationInfoCommentId = reservationInfoCommentId;
+    public void setReservationUserCommentId(int reservationUserCommentId) {
+        this.reservationUserCommentId = reservationUserCommentId;
     }
 
     public int getFileId() {
@@ -45,7 +45,7 @@ public class ReservationUserCommentImage {
         return "ReservationUserCommentImage{" +
                 "id=" + id +
                 ", reservationInfoId=" + reservationInfoId +
-                ", reservationInfoCommentId=" + reservationInfoCommentId +
+                ", reservationUserCommentId=" + reservationUserCommentId +
                 ", fileId=" + fileId +
                 '}';
     }
@@ -57,12 +57,12 @@ public class ReservationUserCommentImage {
         ReservationUserCommentImage that = (ReservationUserCommentImage) o;
         return id == that.id &&
                 reservationInfoId == that.reservationInfoId &&
-                reservationInfoCommentId == that.reservationInfoCommentId &&
+                reservationUserCommentId == that.reservationUserCommentId &&
                 fileId == that.fileId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, reservationInfoId, reservationInfoCommentId, fileId);
+        return Objects.hash(id, reservationInfoId, reservationUserCommentId, fileId);
     }
 }
