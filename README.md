@@ -50,7 +50,7 @@
 
 
 # 실행화면
-[![Video Label](https://img.youtube.com/vi/kHFgIQeTA0c/0.jpg)](https://youtu.be/watch?v=kHFgIQeTA0c)
+[![Video Label](https://img.youtube.com/vi/kHFgIQeTA0c/0.jpg)](https://youtu.be/watch?v=kHFgIQeTA0c)  
 클릭하면 유튜브 동영상 페이지로 넘어감
 # 리팩토링
   - 많다...
