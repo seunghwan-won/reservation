@@ -50,7 +50,7 @@
 
 
 # 실행화면
-[![Video Label](https://img.youtube.com/vi/kHFgIQeTA0c/0.jpg)](https://youtu.be/kHFgIQeTA0c)
+[![Video Label](https://img.youtube.com/vi/kHFgIQeTA0c/0.jpg)](https://youtu.be/kHFgIQeTA0c?t=1)
 # 리팩토링
   - 많다...
 # 참고
