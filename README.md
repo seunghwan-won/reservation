@@ -51,8 +51,8 @@
 
 # 실행화면
 [![Video Label](https://img.youtube.com/vi/kHFgIQeTA0c/0.jpg)](https://youtu.be/watch?v=kHFgIQeTA0c)  
-클릭하면 유튜브 동영상 페이지로 넘어감
+클릭하면 유튜브 동영상 페이지로 넘어갑니다
 # 리팩토링
-  - 많다...
+  - 너무 많다...
 # 참고
 https://www.edwith.org/boostcourse-web/project/8/content/7#summary
